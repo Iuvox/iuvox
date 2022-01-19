@@ -7,6 +7,9 @@ module.exports = {
         'orange': '#F9A64E'
       }
     },
+    fontFamily: {
+      'serif': ['Roboto Slab', 'serif']
+    },
   },
   content: [
     "./index.html",

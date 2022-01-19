@@ -6,7 +6,7 @@
             </router-link>
         </div>
         <div class="flex-1">
-            <router-link to="/there" class="">There</router-link>
+            <router-link to="/" class="">There</router-link>
         </div>
     </nav>
 </template>
