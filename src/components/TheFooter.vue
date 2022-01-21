@@ -1,6 +1,6 @@
 <template>
     <footer
-        class="bg-gray-50 h-96 py-10 px-52 md:px-30 grid grid-cols-3 shadow-slate-600 shadow-2xl z-10"
+        class="bg-gray-50 h-min-96 py-10 md:px-52 md:px-30 grid md:grid-cols-3 shadow-slate-600 shadow-2xl z-10"
     >
         <TheFooterCol title="Koffie drinken?">
             <p>

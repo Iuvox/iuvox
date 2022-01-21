@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-wrap w-2/3">
+    <div class="flex flex-wrap md:w-2/3">
         <label :for="labelFormatted" class="basis-full">
             {{label}}
             <span v-if="required" class="text-slate-800">*</span>

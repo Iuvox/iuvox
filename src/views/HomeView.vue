@@ -1,13 +1,13 @@
 <template>
-    <div class="relative h-96 bg-dark-blue grid grid-cols-2">
-        <div class="pb-40 pt-14 px-5 md:px-48">
+    <div class="relative h-min-40 md:h-min-96  bg-dark-blue grid md:grid-cols-2">
+        <div class="pb-10 md:pb-40 pt-14 px-5 md:px-48">
             <h1 class="text-4xl text-white">
                 Welkom bij
                 <span class="font-serif">Iuvox</span>
             </h1>
             <h4 class="text-2xl text-white">Full service Development bureau</h4>
         </div>
-        <div class="flex items-center justify-center" >
+        <div class="flex relative h-56 items-center justify-center" >
             <TransitionReplaceImage :images="images">
                 <template v-slot:loop="image">
                     <a :href="image.image.link">
@@ -31,7 +31,7 @@
             <BaseButton router-link to="about-us">Ontmoet ons</BaseButton>
         </div>
     </div>
-    <div class="bg-zinc-50 grid md:grid-cols-3 md:p-10 h-96 px-5 md:px-48">
+    <div class="bg-zinc-50 grid md:grid-cols-3 md:p-10 h-min-96 px-5 md:px-48">
         <div
             v-for="i in 3"
             class="basis-full md:basis-1/3 my-3 bg-white drop-shadow-md rounded-lg p-10 mx-10"
@@ -41,7 +41,7 @@
         </div>
     </div>
     <div class="py-10 px-5 md:px-48 grid md:grid-cols-2">
-        <div class="basis-full md:basis-1/3 px-32 font-serif m-auto">
+        <div class="basis-full md:basis-1/3 md:px-32 font-serif m-auto">
             <p class="text-4xl text-dark-blue">Geïntereseerd geraakt? Neem contact met ons op. We komen snel bij je terug!</p>
         </div>
         <div class="basis-full md:basis-2/3">
@@ -52,7 +52,7 @@
                         label="Je Naam"
                         placeholder="Iuvox"
                         class="mt-3"
-                        required="true"
+                        :required="true"
                     />
                     <BaseInput
                         :submitted="input.submitted"
@@ -109,31 +109,7 @@ export default {
             interval: null,
         }
     },
-    mounted() {
-        this.startSlider(4000)
-    },
-    beforeDestroy() {
-        this.killSlider()
-    },
-    methods: {
-        startSlider(ms = 2000) {
-            this.interval = setInterval(() => {
-                this.whichimage = (this.images.length === (this.whichimage + 1) ) ? 0 : this.whichimage + 1
-            }, ms);
-        },
-        killSlider() {
-            if(this.interval) {
-                clearInterval(this.interval)
-            }
-        },
-        animate(key) {
-            const classes = {
-                'opacity-0': (key !== this.whichimage),
-                'opacity-1 z-10': (key === this.whichimage)
-            }
-    	    return classes 
-        }
-    },
+    methods: {},
     components: { BaseButton, BaseInput, BaseForm, TransitionReplaceImage }
 }
 </script>
