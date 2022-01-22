@@ -7,22 +7,18 @@
             </h1>
             <h4 class="text-2xl text-white">Full service Development bureau</h4>
         </div>
-        <div class="flex relative h-56 items-center justify-center" >
-            <TransitionReplaceImage :images="images">
-                <template v-slot:loop="image">
-                    <a :href="image.image.link">
-                        <div class="bg-white grow-0 rounded-full m-auto p-4 w-40 h-40 basis-full flex shadow-md shadow-slate-400">
-                            <img :src="image.image.imglink" :alt="image.image.name">
-                        </div>
-                        <div>
-                            <h4 class="text-white text-4xl text-center">{{image.image.name}}</h4>
-                        </div>
-                    </a>
-                </template>
-            </TransitionReplaceImage>
+        <div class="flex relative items-center justify-center" >
+            <TransitionReplaceImage :images="images" :height="15" :duration="4000" />
         </div>
     </div>
-    <div class="bg-orange bg-opacity-70 px-5 md:px-48 pt-5 flex flex-wrap items-start h-96">
+    <div>
+        <div class="px-10 py-3 flex gap-10 justify-center bg-slate-100 h-24">
+            <div v-for="partner in partners" class="flex">
+                <img :src="partner.logo" class="h-full w-auto grayscale ease-linear duration-200 hover:grayscale-0">
+            </div>
+        </div>
+    </div>
+    <div class="bg-orange bg-opacity-70 px-5 pt-16 flex flex-wrap items-start  md:px-48  h-96">
         <div class="basis-full md:basis-1/3">
             <p class="text-black text-4xl mb-3">
                 Je kent ons nog niet, maar nu wel. Ontmoet
@@ -31,14 +27,8 @@
             <BaseButton router-link to="about-us">Ontmoet ons</BaseButton>
         </div>
     </div>
-    <div class="bg-zinc-50 grid md:grid-cols-3 md:p-10 h-min-96 px-5 md:px-48">
-        <div
-            v-for="i in 3"
-            class="basis-full md:basis-1/3 my-3 bg-white drop-shadow-md rounded-lg p-10 mx-10"
-        >
-            <p class="text-slate-700 text-sm">Development</p>
-            <h2 class="text-lg text-center">Webdevelopment</h2>
-        </div>
+    <div class="bg-zinc-50 grid md:grid-cols-3 gap-5 md:p-10 h-min-96 px-5 md:px-48">
+        <HomeViewCta />
     </div>
     <div class="py-10 px-5 md:px-48 grid md:grid-cols-2">
         <div class="basis-full md:basis-1/3 md:px-32 font-serif m-auto">
@@ -80,6 +70,7 @@ import BaseButton from "../components/BaseButton.vue";
 import BaseInput from "../components/BaseInput.vue";
 import BaseForm from "../components/BaseForm.vue";
 import TransitionReplaceImage from "../components/TransitionReplaceImage.vue";
+import HomeViewCta from "../components/HomeViewCta.vue";
 
 export default {
     data() {
@@ -105,11 +96,19 @@ export default {
                     link: '#wordpress'
                 }
             ],
+            partners: [
+                {logo: 'https://roseflowers.nl/app/uploads/2021/09/logo_rose.png'},
+                {logo: 'https://www.trouwringenvoordeel.nl/Files/10/258000/258892/Protom/1609116/Media/logo2019-transparantkleurpaars_nl.png'},
+                {logo: 'https://spiritualdinnerclub.com/logo-horizon.svg'},
+                {logo: 'https://www.f4work.nl/wp-content/uploads/2021/05/F4Work-logo-600.png'},
+                {logo: '/src/assets/kaashuys-logo.png'},
+                {logo: 'https://prooef.nl/logo.png'}
+            ],
             whichimage: 0,
             interval: null,
         }
     },
     methods: {},
-    components: { BaseButton, BaseInput, BaseForm, TransitionReplaceImage }
+    components: { BaseButton, BaseInput, BaseForm, TransitionReplaceImage, HomeViewCta }
 }
 </script>

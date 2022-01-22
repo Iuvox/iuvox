@@ -1,7 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '/src/views/HomeView.vue'
 
-const cmspage = () => import('/src/views/CmsPage.vue')
 
 const router = createRouter({
     history: createWebHistory(),
@@ -30,7 +29,7 @@ const router = createRouter({
         {
             path: '/:cmspageid',
             name: 'Page',
-            component: cmspage
+            component: () => import('/src/views/CmsPage.vue')
         },
     ]
 })

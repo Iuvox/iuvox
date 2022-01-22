@@ -26,9 +26,6 @@ export default {
         submitted: Boolean,
         type: String,
     },
-    mounted() {
-        console.log(this.slotProps)
-    },
     methods: {
         submitClasses(which) {
             const classes = {
