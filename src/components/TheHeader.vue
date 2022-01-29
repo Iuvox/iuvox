@@ -1,12 +1,15 @@
 <template>
-    <nav class="px-5 flex sticky top-0 z-10 ease-linear duration-300" :class="headerClass">
+    <nav class="px-5 flex sticky top-0 z-50 ease-linear duration-300" :class="headerClass">
         <div class="flex-1">
             <router-link to="/">
-                <h1 class="text-4xl"><span class="font-serif">Iuvox</span></h1>
+                <h1 class="text-4xl"><span class="font-serif">IUVOX</span></h1>
             </router-link>
         </div>
         <div class="flex-1">
-            <router-link to="/" class="">There</router-link>
+            <ul class="flex flex-nowrap gap-2">
+                <li class="" ><router-link to="/" class="">Home</router-link></li>
+                <li><router-link to="/over-ons" class="">Over ons</router-link></li>
+            </ul>
         </div>
     </nav>
 </template>

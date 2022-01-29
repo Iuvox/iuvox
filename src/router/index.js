@@ -11,8 +11,14 @@ const router = createRouter({
             component: Home,
         },
         {
-            path: '/about-us',
-            name: 'About us',
+            path: '/cases/:case',
+            name: 'Case',
+            component: () => import('/src/views/CmsPage.vue')
+        },
+        {
+            path: '/waarom-iuvox',
+            name: 'Waarom Iuvox?',
+            component: () => import('/src/views/AboutView.vue')
         },
         {
             path: '/algemene-voorwaarden',

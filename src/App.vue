@@ -1,12 +1,15 @@
 <script setup>
-// This starter template is using Vue 3 <script setup> SFCs
-// Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
 import TheHeader from "./components/TheHeader.vue"
 import TheFooter from "./components/TheFooter.vue";
+import { useMain } from "./store/main";
+
+const main = useMain()
+main.setCases()
+
 </script>
 
 <template >
-  <TheHeader />
-  <router-view />
-  <TheFooter />
+    <TheHeader />
+    <router-view />
+    <TheFooter />
 </template>

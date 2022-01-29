@@ -1,12 +1,12 @@
 <template>
     <div class="flex flex-wrap md:w-2/3">
         <label :for="labelFormatted" class="basis-full">
-            {{label}}
+            {{ label }}
             <span v-if="required" class="text-slate-800">*</span>
         </label>
         <input
             :type="inputType"
-            class="peer basis-full border border-slate-200 mt-1 rounded-sm px-2 py-1 ease-linear duration-75 outline-none focus:shadow-sm" 
+            class="peer basis-full border border-slate-200 mt-1 rounded-sm px-2 py-1 ease-linear duration-75 outline-none focus:shadow-sm"
             :class="submitClasses('input')"
             :name="labelFormatted"
             :id="labelFormatted"
@@ -21,29 +21,29 @@
 export default {
     props: {
         label: String,
-        required: Boolean,   
-        placeholder:String,
+        required: Boolean,
+        placeholder: String,
         submitted: Boolean,
-        type: String,
+        type: String
     },
     methods: {
         submitClasses(which) {
             const classes = {
-                input: 'invalid:border-red-500 invalid:shadow-md invalid:shadow-red-100',
-                small: 'peer-invalid:inline'
-            }
+                input: "invalid:border-red-500 invalid:shadow-sm invalid:shadow-red-100",
+                small: "peer-invalid:inline peer-invalid:text-red-500"
+            };
             return {
                 [classes[which]]: this.submitted
-            }
-        },
+            };
+        }
     },
     computed: {
         labelFormatted() {
-            return this.label.replace(' ','_').toLowerCase()
+            return this.label.replace(" ", "_").toLowerCase();
         },
         inputType() {
-            return this.type || 'text'
+            return this.type || "text";
         }
     }
-}
+};
 </script>

@@ -6,9 +6,9 @@
                     <div class="bg-white grow-0 rounded-full m-auto p-4 basis-full flex shadow-md shadow-slate-400 h-40 w-40" :style="childHeightClass">
                         <img :src="image.imglink" :alt="image.name" class="w-full h-full">
                     </div>
-                    <div>
+                    <!-- <div>
                         <h4 class="text-white text-4xl text-center">{{image.name}}</h4>
-                    </div>
+                    </div> -->
                 </a>
             </slot>
         </div>
