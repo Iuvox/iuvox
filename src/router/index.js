@@ -4,8 +4,7 @@ import Home from '/src/views/HomeView.vue'
 
 const router = createRouter({
     history: createWebHistory(),
-    routes: [
-        {
+    routes: [{
             path: '/',
             name: 'Home',
             component: Home,
@@ -13,12 +12,14 @@ const router = createRouter({
         {
             path: '/cases/:case',
             name: 'Case',
-            component: () => import('/src/views/CmsPage.vue')
+            component: () =>
+                import ('/src/views/CmsPage.vue')
         },
         {
             path: '/waarom-iuvox',
             name: 'Waarom Iuvox?',
-            component: () => import('/src/views/AboutView.vue')
+            component: () =>
+                import ('/src/views/AboutView.vue')
         },
         {
             path: '/algemene-voorwaarden',
@@ -35,12 +36,20 @@ const router = createRouter({
         {
             path: '/:cmspageid',
             name: 'Page',
-            component: () => import('/src/views/CmsPage.vue')
+            component: () =>
+                import ('/src/views/CmsPage.vue')
         },
-    ]
+    ],
+    scrollBehavior(to, from, savedPosition) {
+        if (savedPosition) {
+            return savedPosition
+        } else {
+            return { top: 0 }
+        }
+    }
 })
 
-router.beforeEach( (to) => {
+router.beforeEach((to) => {
     document.title = 'Iuvox | ' + to.name || 'Iuvox'
 })
 

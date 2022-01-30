@@ -18,7 +18,7 @@ export const useMain = defineStore('main', {
         setCases() {
             api.get('/items/cases', {
                 params: {
-                    fields: ['name,logo,status,slug']
+                    fields: 'logo,status,pagedetails.slug,pagedetails.title'
                 }
             }).then((res) => {
                 this.cases = res.data.data

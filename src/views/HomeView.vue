@@ -34,12 +34,12 @@
             <router-link
                 v-for="case_ in main.getCases"
                 class="flex min-w-max snap-center"
-                :to="{ name: 'Case', params: { case: case_.slug } }"
+                :to="{ name: 'Case', params: { case: case_.pagedetails.slug } }"
                 :key="case_"
             >
                 <img
                     :src="imageUrl(case_.logo)"
-                    :alt="case_.name"
+                    :alt="case_.pagedetails.name"
                     class="h-auto w-full object-contain block grayscale ease-linear duration-200 hover:grayscale-0"
                 />
             </router-link>
