@@ -2,7 +2,7 @@
     <form @submit.prevent="submitForm($event)" :novalidate="novalidation">
         <slot name="input" :submitted="submitted"></slot>
         <slot name="submit" >
-            <BaseButton type="button" subtype="submit" class="mt-3">Verstuur</BaseButton>
+            <BaseButton type="submit" class="mt-3">Verstuur</BaseButton>
         </slot>
     </form>
 </template>

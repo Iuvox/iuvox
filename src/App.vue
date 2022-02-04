@@ -13,3 +13,14 @@ main.setCases()
     <router-view />
     <TheFooter />
 </template>
+
+<style>
+    ::-webkit-scrollbar {
+        width: 10px;
+        background-color: white;
+    }
+    ::-webkit-scrollbar-thumb {
+        background-color: lightgrey;
+        border-radius: 10px;
+    }
+</style>

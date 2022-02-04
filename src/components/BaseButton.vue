@@ -1,7 +1,7 @@
 <template>
-    <component :is="tag" :class="classreset" @click="showHref()" class="group" v-bind="$attrs">
+    <component :is="tag" :class="classreset" @click="showHref()" class="group ease duration-500" v-bind="$attrs">
         <slot></slot>
-        <slot name="icon">
+        <slot name="icon" v-if="icon">
             <fa-icon icon="chevron-right" class="ml-1 group-hover:ml-2 ease-linear duration-200" />
         </slot>
     </component>
@@ -28,6 +28,10 @@ const props = defineProps({
     inverse: {
         type: Boolean,
         default: false
+    },
+    icon: {
+        type: Boolean,
+        default: true,
     }
 })
 const classreset = computed(() => {

@@ -47,7 +47,7 @@ api.get('/items/about', {params: {'fields[]': 'sections' }}).then(
 )
 </script>
 
-<style lang="postcss">
+<style>
 section ul {
     @apply marker:text-dark-blue list-disc pl-5
 }

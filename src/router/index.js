@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '/src/views/HomeView.vue'
-
+import {api} from '../plugins/api'
 
 const router = createRouter({
     history: createWebHistory(),
@@ -22,8 +22,9 @@ const router = createRouter({
                 import ('/src/views/AboutView.vue')
         },
         {
-            path: '/algemene-voorwaarden',
-            name: 'Algemene Voorwaarden',
+            path: '/contact-iuvox',
+            name: 'Contact',
+            component: () => import('/src/views/ContactView.vue')
         },
         {
             path: '/disclaimer',
@@ -34,10 +35,24 @@ const router = createRouter({
             name: 'Privacy Policy',
         },
         {
-            path: '/:cmspageid',
+            path: '/404',
+            name: '404',
+            component: () => import ('/src/views/404Page.vue')
+        },
+        {
+            path: '/:slug',
             name: 'Page',
             component: () =>
-                import ('/src/views/CmsPage.vue')
+                import ('/src/views/CmsPage.vue'),
+            beforeEnter(to, from, next) {
+                api.get(`/items/pages?filter[slug][_eq]=${to.params.slug}`).then(res => {
+                    if(res.data.data.length > 0) {
+                        next(data => data.page = res.data.data[0])
+                    } else {
+                        next('/404')
+                    }
+                })
+            }
         },
     ],
     scrollBehavior(to, from, savedPosition) {

@@ -153,6 +153,10 @@ export default {
     },
     mounted() {
         this.case_s = this.main.getCases
+        this.startSlider(4000)
+    },
+    beforeDestroy() {
+        this.killSlider()
     },
     methods: {
         imageUrl(asset) {
@@ -160,7 +164,17 @@ export default {
         },
         handleSubmit(e) {
             console.log(e)
-        }
+        },
+        startSlider(ms = 2000) {
+            this.interval = setInterval(() => {
+                this.whichimage = (this.images.length === (this.whichimage + 1) ) ? 0 : this.whichimage + 1
+            }, ms);
+        },
+        killSlider() {
+            if(this.interval) {
+                clearInterval(this.interval)
+            }
+        },
     },
     components: { BaseButton, BaseInput, BaseForm, TransitionReplaceImage, HomeViewCta }
 }
