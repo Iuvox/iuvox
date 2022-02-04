@@ -1,5 +1,5 @@
 <template>
-    <div class="relative flex justify-center" :style="heightClass">
+    <div class="relative flex justify-center items-center" :style="heightClass">
         <div v-for="(image, key) in images" :key="key" class="absolute ease-in duration-500 " :class="animate(key)" >
             <slot name="loop" :image="image">
                 <a :href="image.link">

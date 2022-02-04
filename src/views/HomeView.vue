@@ -55,7 +55,7 @@
             </p>
             <BaseButton router-link to="about-us">Ontmoet ons</BaseButton>
         </div>
-        <div class="flex justify-center h-60">
+        <div class="flex justify-center items-center h-60">
             <TransitionReplaceImage :images="images" :height="15" :duration="4000" />
         </div>
     </div>
