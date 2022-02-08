@@ -57,12 +57,12 @@
         </div>
     </div>
     <div class="px-3 flex justify-center pb-20">
-        <div class="flex gap-5 md:w-1/2 md:py-10">
+        <div class="mt-4 md:flex gap-5 md:w-1/2 md:py-10 md:mt-0">
             <div><h4 class="font-serif text-2xl font-semibold text-dark-blue">Liever ons direct bereiken?</h4>
             <p>Telefoon: +31 (0)6 49 203 503</p>
             <p>Email: joep@iuvox.nl</p></div>
     <div>
-                    <h5 class="font-serif text-2xl font-semibold text-dark-blue">Onze Bedrijfsgegevens</h5>
+                    <h5 class="font-serif text-2xl font-semibold text-dark-blue mt-3 md:mt-0">Onze Bedrijfsgegevens</h5>
             <p>KVK: 78090911</p>
             <p>BTWNR: NL003285037B49</p>
 

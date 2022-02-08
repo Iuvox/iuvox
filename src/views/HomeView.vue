@@ -25,29 +25,33 @@
         <p class="text-center">
             <small>Ps. Hier zijn we heel trots op</small>
         </p>
-        <TransitionGroup
-            name="list"
-            tag="div"
+        <Transition
             ref="scrollElement"
-            class="px-10 py-3 flex flex-nowrap md:justify-center overflow-x-scroll snap-x snap-mandatory gap-10 h-24 scrollbar-none"
+            enter-active-class="ease duration-500"
+            leave-active-class="duration-500"
+            enter-from-class=" opacity-0"
+            leave-to-class="opacity-0"
         >
-            <router-link
-                v-for="case_ in main.getCases"
-                class="flex min-w-max snap-center"
-                :to="{ name: 'Case', params: { case: case_.pagedetails.slug } }"
-                :key="case_"
+            <div
+                class="px-10 py-3 flex flex-nowrap md:justify-center overflow-x-scroll snap-x snap-mandatory gap-10 h-24 scrollbar-none ease duration-1000"
+                v-if="main.getCases.length > 0"
             >
-                <img
-                    :src="imageUrl(case_.logo)"
-                    :alt="case_.pagedetails.name"
-                    class="h-auto w-full object-contain block grayscale ease-linear duration-200 hover:grayscale-0"
-                />
-            </router-link>
-        </TransitionGroup>
+                <router-link
+                    v-for="case_ in main.getCases"
+                    class="flex min-w-max snap-center"
+                    :to="{ name: 'Case', params: { case: case_.pagedetails.slug } }"
+                    :key="case_"
+                >
+                    <img
+                        :src="imageUrl(case_.logo)"
+                        :alt="case_.pagedetails.name"
+                        class="h-auto w-full object-contain block grayscale ease-linear duration-200 hover:grayscale-0"
+                    />
+                </router-link>
+            </div>
+        </Transition>
     </section>
-    <div
-        class="grid md:grid-cols-2 bg-secondary bg-opacity-70 px-5 md:pb-16 items-center md:px-48"
-    >
+    <div class="grid md:grid-cols-2 bg-secondary bg-opacity-70 px-5 md:pb-16 items-center md:px-48">
         <div>
             <p class="text-black text-4xl mb-3">
                 Je kent ons nog niet, maar nu wel. Ontmoet
@@ -99,7 +103,7 @@
                     <BaseButton tag="a" href="tel:+31649203503" class="ml-2 group">
                         Meteen Bellen
                         <template v-slot:icon="icon">
-                            <fa-icon icon="phone" class="group-hover:animate-ringing" />
+                            <!-- <fa-icon icon="phone" class="group-hover:animate-ringing" /> -->
                         </template>
                     </BaseButton>
                 </template>
@@ -151,8 +155,13 @@ export default {
             interval: null,
         }
     },
+    serverPrefetch() {
+        return this.main.setHomeView()
+    },
     mounted() {
-        this.case_s = this.main.getCases
+        if (!this.main.getCases) {
+            this.main.setHomeView()
+        }
         this.startSlider(4000)
     },
     beforeDestroy() {
@@ -167,11 +176,11 @@ export default {
         },
         startSlider(ms = 2000) {
             this.interval = setInterval(() => {
-                this.whichimage = (this.images.length === (this.whichimage + 1) ) ? 0 : this.whichimage + 1
+                this.whichimage = (this.images.length === (this.whichimage + 1)) ? 0 : this.whichimage + 1
             }, ms);
         },
         killSlider() {
-            if(this.interval) {
+            if (this.interval) {
                 clearInterval(this.interval)
             }
         },
@@ -183,13 +192,11 @@ export default {
 .list-move, /* apply transition to moving elements */
 .list-enter-active,
 .list-leave-active {
-  transition: all 0.5s ease;
+    transition: all 0.5s ease;
 }
 
 .list-enter-from,
 .list-leave-to {
-  opacity: 0;
+    opacity: 0;
 }
-
-
 </style>
