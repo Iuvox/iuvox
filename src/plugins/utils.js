@@ -8,4 +8,6 @@ const SCREEN_SIZES = {
     '2xl': 1536 
 }
 
-export { API_URL, SCREEN_SIZES }
+const WHEREAMI = import.meta.env.SSR ? 'Server' : 'Client'
+
+export { API_URL, SCREEN_SIZES, WHEREAMI }

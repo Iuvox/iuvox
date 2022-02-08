@@ -1,7 +1,6 @@
 <template>
     <component
         :is="type"
-        :href="theHref"
         class="text-dark-blue underline font-semibold"
         v-bind="$attrs"
         @click.self="showHref()"
@@ -42,7 +41,7 @@ export default {
         },
         theHref() {
             if (this.protected) {
-                return '#'
+                return false
             } else {
                 return this.href
             }
