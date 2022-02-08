@@ -25,14 +25,14 @@
             </p>
             <ul>
                 <li>
-                    <BaseLink router-link to="algemene-voorwaarden">Algemene Voorwaarden</BaseLink>
+                    <BaseLink tag="router-link" to="/algemene-voorwaarden">Algemene Voorwaarden</BaseLink>
                 </li>
 
                 <li>
-                    <BaseLink router-link to="disclaimer">Disclaimer</BaseLink>
+                    <BaseLink router-link to="/disclaimer">Disclaimer</BaseLink>
                 </li>
                 <li>
-                    <BaseLink router-link to="privacy-policy">Privacy Policy</BaseLink>
+                    <BaseLink router-link to="/privacy-policy">Privacy Policy</BaseLink>
                 </li>
             </ul>
         </TheFooterCol>

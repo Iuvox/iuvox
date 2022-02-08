@@ -3,7 +3,6 @@ import { createSSRApp, watch } from 'vue'
 import { createRouter } from './router'
 import './index.css'
 
-import { library } from "@fortawesome/fontawesome-svg-core";
 import { createPinia } from 'pinia';
 import { WHEREAMI } from './plugins/utils';
 import { api } from './plugins/api';

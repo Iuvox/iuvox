@@ -3,7 +3,7 @@
         :is="type"
         class="text-dark-blue underline font-semibold"
         v-bind="$attrs"
-        @click.self="showHref()"
+        @click.self="showHref($event)"
     >
         <slot></slot>
     </component>
@@ -12,6 +12,10 @@
 <script>
 export default {
     props: {
+        tag: {
+            type: String,
+            default: 'button'
+        },
         href: {
             type: String,
             default: null
@@ -26,18 +30,15 @@ export default {
         },
     },
     methods: {
-        showHref() {
-            window.location = this.href
+        showHref(e) {
+            if(this.protected) {
+                window.location = this.href           
+            }
         }
     },
     computed: {
         type() {
-            var type = this.routerLink ? 'router-link' : 'button'
-            if(this.href !== null && this.protected === false) {
-                return 'a'
-            } else {
-                return type
-            }
+            return this.tag
         },
         theHref() {
             if (this.protected) {

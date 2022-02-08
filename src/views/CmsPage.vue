@@ -1,5 +1,5 @@
 <template>
-    <div id="cmspage" class="md:px-96 py-24">
+    <div id="cmspage" v-if="page" class="md:px-96 py-2 px-4 md:py-20">
         <h1>{{ page.title }}</h1>
 
         <div v-html="page.content"></div>
@@ -7,7 +7,6 @@
 </template>
 
 <script>
-import { api } from "../plugins/api"
 import { useMain } from "../store/main"
 
 export default {
@@ -21,6 +20,11 @@ export default {
         const main = useMain(this.$pinia)
         const res = await main.setCmsPage(this.$route.params.slug)
         return res
+    },
+    mounted() {
+        if(!this.page) {
+            this.main.setCmsPage(this.$route.params.slug)
+        }
     },
     computed: {
         page() {
