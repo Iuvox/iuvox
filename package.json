@@ -27,7 +27,8 @@
     "cross-env": "^7.0.3",
     "express": "^4.17.2",
     "nodemon": "^2.0.15",
-    "pinia": "^2.0.10"
+    "pinia": "^2.0.10",
+    "tsparticles": "^1.41.0"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^2.0.1",

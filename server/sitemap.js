@@ -1,7 +1,6 @@
 const { default: axios } = require("axios")
 const fs = require('fs')
 const { resolve } = require('./server-utils')
-// const { router } = require('../src/router')
 
 const xmlTemplate = (obj = { url: String, loc: String, lastmod: Date, changefreq: String, priority: Number }) => {
     const xml = []
@@ -19,6 +18,26 @@ const xmlTemplate = (obj = { url: String, loc: String, lastmod: Date, changefreq
     return `<url>${xml.join('')}</url>`
 }
 
+const routes = [
+    {
+        slug: '',
+        updated_at: '2022-02-12T19:38:19',
+        layout: null,
+        priority: 1
+    },
+    {
+        slug: 'waarom-iuvox',
+        updated_at: '2022-02-12T19:38:19',
+        layout: null,
+        priority: 0.8
+    },
+    {
+        slug: 'contact-iuvox',
+        updated_at: '2022-02-12T19:38:19',
+        layout: null,
+        priority: 0.8
+    }
+]
 
 
 module.exports = async(req, res) => {
@@ -38,7 +57,7 @@ module.exports = async(req, res) => {
                 }
             })
             .then(result => {
-                const data = result.data.data
+                const data = routes.concat(result.data.data)
                 const xml = []
 
                 data.forEach(el => {
@@ -49,7 +68,7 @@ module.exports = async(req, res) => {
 
                     xmlObj.loc = `${req.protocol}://${req.headers.host}/${base}${slug}`
                     xmlObj.lastmod = el.updated_at
-                    xmlObj.priority = 0.8
+                    xmlObj.priority = el.priority || 0.6
 
 
                     xml.push(xmlTemplate(xmlObj))

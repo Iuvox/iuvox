@@ -50,7 +50,7 @@
                 class="fixed right-0 top-0 bottom-0 z-30 h-screen w-8/12 p-5 bg-slate-100 text-dark-blue md:relative md:p-0 md:text-inherit md:inset-auto md:h-auto md:w-auto md:bg-transparent md:flex-1 md:pr-20"
             >
                 <ul class="pt-2 flex justify-end flex-col md:flex-row gap-6">
-                    <TheHeaderMenuitems :items="links" />
+                    <TheHeaderMenuitems :closeAll="closeall" :items="links" />
                     <li>
                         <BaseButton
                             tag="router-link"
@@ -75,8 +75,9 @@ import BaseButton from "./BaseButton.vue";
 import MenuIcon from '../plugins/icons/MenuIcon.vue'
 import CloseIcon from '../plugins/icons/CloseIcon.vue'
 import TheHeaderMenuitems from "./TheHeaderMenuitems.vue";
-import { useWindowScroll, useWindowSize } from "@vueuse/core"
+import { onClickOutside, useWindowScroll, useWindowSize } from "@vueuse/core"
 import { api } from "../plugins/api";
+import { ref } from "vue";
 
 export default {
     setup() {
@@ -89,6 +90,7 @@ export default {
         return {
             msg: "test",
             iscollapsed: true,
+            closeall: false,
             headerheight: 82,
             services: [],
             classes: {
@@ -120,6 +122,7 @@ export default {
         api.get('/items/services?fields=*.*').then(res => {
             this.services = res.data.data
         })
+        onClickOutside(this.$refs.header, (e) => this.closeall = !this.closeall)
     },
     computed: {
         headerClass() {

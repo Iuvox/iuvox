@@ -1,25 +1,28 @@
 <template>
-    <div class="relative h-min-40 py-5 md:py-56 bg-dark-blue px-4 md:px-52">
-        <h1 class="text-5xl font-bold text-secondary">
-            Welkom bij
-            <span class="font-serif">Iuvox</span>
-        </h1>
-        <h2
-            class="text-4xl text-white"
-        >All-in-one, Full-Service Development bureau dat jouw bedrijf nodig heeft</h2>
-        <span class="relative inline-flex mt-5">
-            <BaseButton
-                tag="router-link"
-                to="/waarom-iuvox"
-                class="inline-flex items-center px-4 py-2 font-semibold leading-6 text-sm shadow rounded-md text-dark-blue bg-white transition ease-in-out duration-150 delay-150 ring-1 ring-slate-900/10"
-            >Leer ons kennen</BaseButton>
-            <span class="flex absolute h-3 w-3 top-0 right-0 -mt-1 -mr-1">
-                <span
-                    class="animate-ping absolute inline-flex h-full w-full rounded-full bg-secondary opacity-75"
-                ></span>
-                <span class="relative inline-flex rounded-full h-3 w-3 bg-secondary"></span>
+    <div class="relative h-min-40 py-5 md:py-56 px-4 md:px-52">
+        <div id="tsparticles" class="absolute inset-0 bg-dark-blue -z-10 pointer-events-none"></div>
+        <div class="z-40"> 
+            <h1 class="text-5xl font-bold text-secondary">
+                Welkom bij
+                <span class="font-serif">Iuvox</span>
+            </h1>
+            <h2
+                class="text-4xl text-white"
+            >All-in-one, Full-Service Development bureau dat jouw bedrijf nodig heeft</h2>
+            <span class="relative inline-flex mt-5">
+                <BaseButton
+                    tag="router-link"
+                    to="/waarom-iuvox"
+                    class="inline-flex items-center px-4 py-2 font-semibold leading-6 text-sm shadow rounded-md text-dark-blue bg-white transition ease-in-out duration-150 delay-150 ring-1 ring-slate-900/10"
+                >Leer ons kennen</BaseButton>
+                <span class="flex absolute h-3 w-3 top-0 right-0 -mt-1 -mr-1">
+                    <span
+                        class="animate-ping absolute inline-flex h-full w-full rounded-full bg-secondary opacity-75"
+                    ></span>
+                    <span class="relative inline-flex rounded-full h-3 w-3 bg-secondary"></span>
+                </span>
             </span>
-        </span>
+        </div>
     </div>
     <section class="bg-slate-100">
         <p class="text-center">
@@ -57,7 +60,7 @@
                 Je kent ons nog niet, maar nu wel. Ontmoet
                 <span class="font-serif">Iuvox</span>. Wij hebben ervaring met ontzettend veel platforms
             </p>
-            <BaseButton router-link to="about-us">Ontmoet ons</BaseButton>
+            <BaseButton tag="router-link" to="/waarom-iuvox">Ontmoet ons</BaseButton>
         </div>
         <div class="flex justify-center items-center h-60">
             <TransitionReplaceImage :images="images" :height="15" :duration="4000" />
@@ -120,6 +123,7 @@ import TransitionReplaceImage from "../components/TransitionReplaceImage.vue";
 import HomeViewCta from "../components/HomeViewCta.vue";
 import { API_URL } from "../plugins/utils";
 import { useMain } from "../store/main";
+import { particles } from "../plugins/particles/";
 
 
 
@@ -161,6 +165,9 @@ export default {
     mounted() {
         if (!this.main.getCases) {
             this.main.setHomeView()
+        }
+        if (!import.meta.env.SSR) {
+            particles()
         }
         this.startSlider(4000)
     },

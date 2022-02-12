@@ -1,8 +1,12 @@
 <template>
-    <li v-for="item in items" class="px-4 ease duration-300">
+    <li v-for="item in items" class="px-4 ease duration-300" >
         <div class="text-lg font-serif font-normal">
-            <router-link v-if="'routerLink' in item" @click="closePopovers()" :to="item.routerLink">{{item.name}}</router-link>
-            <button v-else @click="togglePopover(item)">{{item.name}}</button>
+            <router-link
+                v-if="'routerLink' in item"
+                @click="closePopovers()"
+                :to="item.routerLink"
+            >{{ item.name }}</router-link>
+            <button v-else @click="togglePopover(item)">{{ item.name }}</button>
         </div>
 
         <transition
@@ -11,6 +15,7 @@
         >
             <div
                 v-if="item.popoverOpen"
+                ref="popover"
                 class="fixed inset-0 mt-0 flex justify-center items-center h-screen md:h-auto md:absolute md:inset-auto md:right-0 bg-slate-200 shadow-md rounded-md px-3 py-2 ease transition duration-300 md:mt-3 text-black md:-translate-x-8 z-50"
             >
                 <div class="md:flex">
@@ -66,7 +71,7 @@
     </li>
 </template>
 
-<script setup>
+<script setup>import { watch } from 'vue';
 
 
 const props = defineProps({
@@ -74,16 +79,24 @@ const props = defineProps({
         type: Object,
         required: true
     },
+    closeAll: {
+        type: Boolean,
+        default: false
+    }
 })
 
 const closePopovers = () => {
     Object.keys(props.items).forEach(el => {
         const val = props.items[el]
-        if('popover' in val) {
+        if ('popover' in val) {
             val.popoverOpen = false
         }
     })
 }
+
+watch(() => props.closeAll, () => {
+    closePopovers()
+})
 
 const togglePopover = (menuItem) => menuItem.popoverOpen = !menuItem.popoverOpen
 
