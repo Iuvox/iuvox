@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia'
+import { useRouter } from 'vue-router'
 import { api } from '../plugins/api'
 
 export const useMain = defineStore('main', {
@@ -8,7 +9,8 @@ export const useMain = defineStore('main', {
             aboutus: {},
             loading: false,
             aboutpage: {},
-            CmsPage: {}
+            CmsPage: {},
+            ServicePage: {}
         }
     },
     getters: {
@@ -25,7 +27,17 @@ export const useMain = defineStore('main', {
             } else {
                 return false
             }
-        }
+        },
+        getServices(state) {
+            return (slug) => {
+                if(slug in state.ServicePage) {
+                    return state.ServicePage[slug]
+                } else {
+                    return false
+                }        
+            }
+            
+        },
     },
     actions: {
         async setHomeView() {
@@ -44,12 +56,28 @@ export const useMain = defineStore('main', {
                 }
             })
             this.aboutpage = res.data.data
-            console.log(`executed on ${import.meta.env.SSR ? 'server' : 'client'} `)
             return res.data.data
         },
         async setCmsPage(slug = String) {
             const res = await api.get(`/items/pages?filter[slug][_eq]=${slug}`)
             return this.CmsPage[slug] = res.data.data[0]
+        },
+        async setServices(slug = String) {
+            if(slug in this.ServicePage) {
+                return
+            }
+            const filter = {
+                pagedetails: {
+                    slug: {
+                        _eq: slug
+                    }
+                }
+            }
+            const res = (await api.get(`http://localhost:8055/items/services?filter=${JSON.stringify(filter)}`)).data.data
+            if(res.length === 0) {
+                return false
+            }
+            this.ServicePage[slug] = res[0]
         },
         setLoading(bool = Boolean) {
             this.loading = bool

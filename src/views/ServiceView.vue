@@ -1,0 +1,103 @@
+<template>
+    <div>
+        <div class="bg-dark-blue px-3 pt-10 pb-32 md:px-28 md:py-40">
+            <h2 class="text-xl text-secondary font-semibold">De expertise die jij nodig hebt</h2>
+            <h1 class="text-4xl text-white font-semibold">Wordpress Webdevelopment</h1>
+        </div>
+        <div class="px-3 md:px-28 md:py-40">
+            <h2 class="text-3xl font-semibold">{{ getService.titel }}</h2>
+            <hr class="bg-dark-blue h-1 md:w-1/2" />
+            <div class="text-lg md:font-semibold py-10" v-html="getService.inleiding"></div>
+        </div>
+        <div class="md:flex md:px-28 md:py-20 md:gap-20">
+            <div class="md:w-1/3">
+                <img src="https://via.placeholder.com/250/0000FF/808080?text=fotohier" alt />
+            </div>
+            <div class="px-3 text-lg md:w-2/3 normal-ul">
+                <div class="px-3 text-lg md:w-2/3 normal-ul" v-html="getService.description"></div>
+            </div>
+        </div>
+        <div class="px-3 md:px-28 md:py-20 md:gap-10">
+            <h2 class="text-3xl font-bold">Geïnteresseerd?</h2>
+            <div class="md:flex mt-3">
+                <div class="py-5 px-20 bg-slate-50 rounded-md shadow-md text-center">
+                    <h4 class="text-secondary font-semibold">Gebasseerd op een Wordpress thema</h4>
+                    <p
+                        class="text-4xl text-dark-blue font-bold font-serif m-10 tracking-widest"
+                    >€3500</p>
+                    <ul class="text-slate-400">
+                        <li v-for="item in prices.cheap" class="mt-2" v-html="item"></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<script>
+import { useRoute } from "vue-router";
+import BaseButton from "../components/BaseButton.vue"
+import { useMain } from "../store/main";
+
+export default {
+    setup() {
+        const main = useMain()
+        return {
+            main
+        }
+    },
+    data() {
+        return {
+            particles: null,
+            prices: {
+                cheap: [
+                    "1 uur brainstorm",
+                    "6 volledig ingerichte paginas",
+                    "Mobiel Ready",
+                    "Contactformulier",
+                    "2 uur bootcamp",
+                    "Basis SEO integraties",
+                    "Basis Google Analytics integratie",
+                    "2 rondes aan revisie",
+                    "<strong>€200 per pagina extra</strong>"
+                ]
+            }
+        };
+    },
+    async serverPrefetch() {
+        const main = useMain(this.$pinia)
+        const route = useRoute()
+        const res = await main.setServices(route.params.slug)
+        return res
+    },
+    mounted() {
+        if (!this.getService) {
+            this.setServices()
+        }
+    },
+    methods: {
+        setServices() {
+            this.main.setServices(this.$route.params.slug)
+        }
+    },
+    computed: {
+        title() {
+            return "hi";
+        },
+        getService() {
+            return this.main.getServices(this.$route.params.slug)
+        }
+    },
+    watch: {
+        $route() {
+            this.setServices()
+        }
+    },
+    components: { BaseButton }
+}
+</script>
+<style lang="postcss">
+.normal-ul ul {
+    @apply marker:text-dark-blue list-disc pl-5;
+}
+</style>

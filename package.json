@@ -10,7 +10,8 @@
     "build:server:noExternal": "vite build --config vite.config.noexternal.js --ssr src/entry-server.js --outDir dist/server",
     "generate": "vite build --ssrManifest --outDir dist/static && npm run build:server",
     "serve": "cross-env NODE_ENV=production node server",
-    "debug": "node --inspect-brk server"
+    "debug": "node --inspect-brk server",
+    "prerender-dev": "node prerender-dev.js"
   },
   "repository": {
     "type": "git",
@@ -19,6 +20,8 @@
   "dependencies": {
     "@vue/compiler-sfc": "^3.2.26",
     "@vue/server-renderer": "^3.2.26",
+    "@vueuse/core": "^7.6.1",
+    "@vueuse/head": "^0.7.5",
     "axios": "^0.25.0",
     "compression": "^1.7.4",
     "cross-env": "^7.0.3",
@@ -33,7 +36,7 @@
     "sass": "^1.48.0",
     "tailwindcss": "^3.0.13",
     "vite": "^2.7.12",
-    "vue": "^3.2.25",
+    "vue": "^3.2.30",
     "vue-router": "^4.0.12"
   }
 }

@@ -9,8 +9,8 @@
         >All-in-one, Full-Service Development bureau dat jouw bedrijf nodig heeft</h2>
         <span class="relative inline-flex mt-5">
             <BaseButton
-                type="router-link"
-                :to="'/'"
+                tag="router-link"
+                to="/waarom-iuvox"
                 class="inline-flex items-center px-4 py-2 font-semibold leading-6 text-sm shadow rounded-md text-dark-blue bg-white transition ease-in-out duration-150 delay-150 ring-1 ring-slate-900/10"
             >Leer ons kennen</BaseButton>
             <span class="flex absolute h-3 w-3 top-0 right-0 -mt-1 -mr-1">

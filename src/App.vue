@@ -1,13 +1,30 @@
 <script setup>
 import TheHeader from "./components/TheHeader.vue"
 import TheFooter from "./components/TheFooter.vue";
-import { useMain } from "./store/main";
-import { onMounted } from "vue";
+import { useHead } from "@vueuse/head";
+import { computed } from "vue";
+import { useRoute } from "vue-router";
 
-// onMounted(() => {
-//     const main = useMain()
-//     return main.setCases()
-// })
+
+const route = useRoute()
+
+useHead({
+    title: computed(() => ('title' in route.meta) ? `${route.meta.title} | Iuvox`: `${route.name} | Iuvox` ),
+    htmlAttrs: [
+        { lang: "nl-NL" }
+    ],
+    meta: [
+        {
+            name: 'description',
+            content: computed(() => route.meta.description)
+        },
+        {
+            itemprop: 'test',
+            content: 'test'
+        }
+    ]
+})
+
 
 </script>
 
@@ -18,12 +35,15 @@ import { onMounted } from "vue";
 </template>
 
 <style>
-    ::-webkit-scrollbar {
-        width: 10px;
-        background-color: white;
-    }
-    ::-webkit-scrollbar-thumb {
-        background-color: lightgrey;
-        border-radius: 10px;
-    }
+::-webkit-scrollbar {
+    width: 10px;
+    background-color: white;
+}
+::-webkit-scrollbar-thumb {
+    background-color: lightgrey;
+    border-radius: 10px;
+}
+h1,h2,h3,h4,h5,h6 {
+    @apply font-serif
+}
 </style>

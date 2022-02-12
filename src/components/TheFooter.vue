@@ -12,7 +12,7 @@
         <TheFooterCol title="Ontdek">
             <ul>
                 <li v-for="i in 3">
-                    <router-link to="about-us">Aboutus</router-link>
+                    <router-link to="/merces-marketing">We were Merces Marketing</router-link>
                 </li>
             </ul>
         </TheFooterCol>

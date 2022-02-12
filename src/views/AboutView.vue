@@ -53,7 +53,6 @@ export default {
         return res
     },
     mounted() {
-        console.log(this.main.getSections)
         if(!this.main.getSections) {
             this.main.setAboutPage()
         }

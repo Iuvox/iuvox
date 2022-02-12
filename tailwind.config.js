@@ -4,7 +4,7 @@ module.exports = {
         extend: {
             colors: {
                 'dark-blue': '#0d1173',
-                'secondary': '#B2FFA9'
+                'secondary': '#5DDEA2'
             },
             animation: {
                 'ringing': 'wigglephone 1.5s linear infinite'

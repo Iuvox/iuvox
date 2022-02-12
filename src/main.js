@@ -1,12 +1,11 @@
 import App from './App.vue'
 import { createSSRApp, watch } from 'vue'
-import { createRouter } from './router'
+import { createRouter, routerBeforeEach } from './router'
 import './index.css'
 
 import { createPinia } from 'pinia';
-import { WHEREAMI } from './plugins/utils';
 import { api } from './plugins/api';
-
+import { createHead } from '@vueuse/head'
 
 // SSR requires a fresh app instance per request, therefore we export a function
 // that creates a fresh app instance. If using Vuex, we'd also be creating a
@@ -15,27 +14,15 @@ export function createApp() {
     const app = createSSRApp(App)
     const router = createRouter()
     const pinia = createPinia()
+    const head = createHead()
 
-    router.beforeEach((to, from, next) => {
-        api.get(`/items/pages?filter[slug][_eq]=${to.params.slug}`).then(res => {
-            if (res.data.data.length > 0) {
-                const result = res.data.data[0]
-                console.log(result.redirect)
-
-                if (result.redirect === true) {
-                    next(`/${result.redirect_to}`)
-                } else {
-                    next()
-                }
-            } else {
-                next()
-            }
-        })
-    })
+    router.beforeEach(routerBeforeEach)
+    
     app.use(router)
         .use(pinia)
+        .use(head)
 
 
 
-    return { app, router, pinia }
+    return { app, router, pinia, head }
 }
