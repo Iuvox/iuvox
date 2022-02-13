@@ -75,16 +75,12 @@ import BaseButton from "./BaseButton.vue";
 import MenuIcon from '../plugins/icons/MenuIcon.vue'
 import CloseIcon from '../plugins/icons/CloseIcon.vue'
 import TheHeaderMenuitems from "./TheHeaderMenuitems.vue";
-import { onClickOutside, useWindowScroll, useWindowSize } from "@vueuse/core"
+import { onClickOutside, useWindowScroll } from "@vueuse/core"
 import { api } from "../plugins/api";
-import { ref } from "vue";
 
 export default {
     setup() {
-        const { width } = useWindowSize()
-        return {
-            width
-        }
+    
     },
     data() {
         return {
@@ -143,7 +139,7 @@ export default {
             if (import.meta.env.SSR) {
                 return false
             } else {
-                return this.width < SCREEN_SIZES.md
+                return !window.matchMedia('(min-width: 768px)').matches
             }
         },
         collapsed() {

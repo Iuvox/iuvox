@@ -18,8 +18,7 @@ const xmlTemplate = (obj = { url: String, loc: String, lastmod: Date, changefreq
     return `<url>${xml.join('')}</url>`
 }
 
-const routes = [
-    {
+const routes = [{
         slug: '',
         updated_at: '2022-02-12T19:38:19',
         layout: null,
@@ -50,50 +49,54 @@ const routes = [
 module.exports = async(req, res) => {
 
     const isProd = process.env.NODE_ENV === 'production'
-    
+
     if (isProd) {
-        const sitemap = fs.readFileSync(resolve('../dist/server/sitemap.xml'), 'utf-8')
-        res.set({ 'Content-Type': 'application/xml' }).send(sitemap)
-    } else {
-        axios.get('http://localhost:8055/items/pages', {
-                headers: {
-                    'Authorization': 'Bearer admintoken'
-                },
-                params: {
-                    fields: 'slug,layout,updated_at'
+        try {
+            const sitemap = fs.readFileSync(resolve('../dist/server/sitemap.xml'), 'utf-8')
+            res.set({ 'Content-Type': 'application/xml' }).send(sitemap)
+        } catch (error) {}
+    }
+    axios.get('http://admin.iuvox.nl/items/pages', {
+            headers: {
+                'Authorization': 'Bearer admintoken'
+            },
+            params: {
+                fields: 'slug,layout,updated_at'
+            }
+        })
+        .then(result => {
+            const data = routes.concat(result.data.data)
+            const xml = []
+
+            data.forEach(el => {
+                const xmlObj = {}
+
+                const base = (el.layout === null) ? '' : `${el.layout}/`
+                const slug = el.slug
+
+                xmlObj.loc = `${req.protocol}://${req.headers.host}/${base}${slug}`
+                xmlObj.lastmod = el.updated_at
+                xmlObj.priority = el.priority || 0.6
+
+
+                xml.push(xmlTemplate(xmlObj))
+            });
+
+            const sitemap = `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"> ${xml.join('')}</urlset>`
+
+
+            fs.writeFile(resolve('../dist/server/sitemap.xml'), sitemap, err => {
+                if (err) {
+                    console.log(err)
                 }
             })
-            .then(result => {
-                const data = routes.concat(result.data.data)
-                const xml = []
+        })
+        .catch(err => {
+            console.log(err)
+        })
 
-                data.forEach(el => {
-                    const xmlObj = {}
+    if (!isProd) {
+        res.set({ 'Content-Type': 'application/xml' }).send(sitemap)
 
-                    const base = (el.layout === null) ? '' : `${el.layout}/`
-                    const slug = el.slug
-
-                    xmlObj.loc = `${req.protocol}://${req.headers.host}/${base}${slug}`
-                    xmlObj.lastmod = el.updated_at
-                    xmlObj.priority = el.priority || 0.6
-
-
-                    xml.push(xmlTemplate(xmlObj))
-                });
-
-                const sitemap = `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"> ${xml.join('')}</urlset>`
-
-                res.set({ 'Content-Type': 'application/xml' }).send(sitemap)
-
-                fs.writeFile(resolve('../dist/server/sitemap.xml'), sitemap, err => {
-                    if (err) {
-                        console.log(err)
-                    }
-                })
-            })
-            .catch(err => {
-                console.log(err)
-            })
     }
-
 }

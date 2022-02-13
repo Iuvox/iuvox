@@ -1,5 +1,4 @@
 import { defineStore } from 'pinia'
-import { useRoute, useRouter } from 'vue-router'
 import { api } from '../plugins/api'
 
 export const useMain = defineStore('main', {

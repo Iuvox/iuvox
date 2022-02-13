@@ -51,6 +51,8 @@ async function createServer(
     
 
     app.use('/sitemap.xml', require('./sitemap.js') )
+    app.use('/robots.txt', require('./robots.js'))
+
 
     app.use('*', async(req, res) => {
         try {

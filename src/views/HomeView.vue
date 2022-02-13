@@ -124,7 +124,6 @@ import HomeViewCta from "../components/HomeViewCta.vue";
 import { API_URL } from "../plugins/utils";
 import { useMain } from "../store/main";
 import { particles } from "../plugins/particles/";
-import { useHead } from "@vueuse/head";
 import { useRoute } from "vue-router";
 
 

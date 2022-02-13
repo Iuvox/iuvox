@@ -1,8 +1,9 @@
-import Home from '/src/views/HomeView.vue'
 import { api } from '../plugins/api'
 import { createMemoryHistory, createRouter as _createRouter, createWebHistory } from 'vue-router'
 
 const components = {
+    home: () =>
+        import ('/src/views/HomeView.vue'),
     case: () =>
         import ('/src/views/CmsPage.vue'),
     about: () =>
@@ -24,7 +25,7 @@ const components = {
 const routes = [{
         path: '/',
         name: 'Home',
-        component: Home,
+        component: components.home
     },
     {
         path: '/cases/:case',
