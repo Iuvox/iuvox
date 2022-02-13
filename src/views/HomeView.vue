@@ -124,11 +124,15 @@ import HomeViewCta from "../components/HomeViewCta.vue";
 import { API_URL } from "../plugins/utils";
 import { useMain } from "../store/main";
 import { particles } from "../plugins/particles/";
+import { useHead } from "@vueuse/head";
+import { useRoute } from "vue-router";
 
 
 
 export default {
     setup() {
+        const route = useRoute()
+        route.meta.description = 'Iuvox Development. Wij bouwen alles van websites to API koppelingen. Wij helpen jouw bedrijf naar het volgende level tillen.'
         const main = useMain()
         return { main }
     },
@@ -159,8 +163,9 @@ export default {
             interval: null,
         }
     },
-    serverPrefetch() {
-        return this.main.setHomeView()
+    async serverPrefetch() {
+        const res = await this.main.setHomeView()
+        return res
     },
     mounted() {
         if (!this.main.getCases) {

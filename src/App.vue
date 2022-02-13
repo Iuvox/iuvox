@@ -19,6 +19,14 @@ useHead({
             content: computed(() => route.meta.description)
         },
         {
+            property: 'og:description',
+            content: computed(() => route.meta.description)
+        },
+        {
+            property: 'og:image',
+            content: '/favicon.png'
+        },
+        {
             itemprop: 'test',
             content: 'test'
         }

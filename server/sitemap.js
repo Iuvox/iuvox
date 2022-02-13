@@ -32,6 +32,13 @@ const routes = [
         priority: 0.8
     },
     {
+        slug: 'services',
+        updated_at: '2022-02-12T19:38:19',
+        layout: null,
+        priority: 0.8
+
+    },
+    {
         slug: 'contact-iuvox',
         updated_at: '2022-02-12T19:38:19',
         layout: null,
@@ -43,7 +50,7 @@ const routes = [
 module.exports = async(req, res) => {
 
     const isProd = process.env.NODE_ENV === 'production'
-
+    
     if (isProd) {
         const sitemap = fs.readFileSync(resolve('../dist/server/sitemap.xml'), 'utf-8')
         res.set({ 'Content-Type': 'application/xml' }).send(sitemap)

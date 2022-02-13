@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { api } from '../plugins/api'
 
 export const useMain = defineStore('main', {
@@ -43,7 +43,7 @@ export const useMain = defineStore('main', {
         async setHomeView() {
             const res = await api.get('/items/cases', {
                 params: {
-                    fields: 'logo,status,pagedetails.slug,pagedetails.title'
+                    fields: 'logo,status,pagedetails.*'
                 }
             })
             this.homepage.cases = res.data.data

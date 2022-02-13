@@ -11,6 +11,8 @@ const components = {
         import ('/src/views/ContactView.vue'),
     cmspage: () =>
         import ('/src/views/CmsPage.vue'),
+    servicecollection: () =>
+        import ('/src/views/ServicecollectionView.vue'),
     serviceview: () =>
         import ('/src/views/ServiceView.vue'),
     glossary: () =>
@@ -46,10 +48,14 @@ const routes = [{
             import ('/src/views/404Page.vue')
     },
     {
-        path: '/services/:slug',
+        path: '/services/',
         name: 'Service',
+        component: components.servicecollection,
+    },
+    {
+        path: '/services/:slug',
+        name: 'Serviceitem',
         component: components.serviceview
-
     },
     {
         path: '/wat-betekent/:word',
@@ -111,6 +117,23 @@ const routerBeforeEach = async(to, from) => {
         if (res.length > 0) {
             to.meta.layout = res[0].layout
 
+        }
+    }
+    const params = {
+        filter: {
+            slug: {
+                _eq: to.path.split('/').at('-1')
+            }
+        },
+        fields: 'title, description'
+    }
+    if (to.path !== '/') {
+        const meta = (await api.get(`/items/pages`, { params: params })).data.data
+        if (meta.length > 0) {
+            to.meta = {
+                ...to.meta,
+                ...meta[0]
+            }
         }
     }
 }

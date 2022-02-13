@@ -19,6 +19,8 @@ import BaseButton from '../components/BaseButton.vue';
 
 
 const route = useRoute()
+route.meta.description = 'Ohnee, deze pagina is niet gevonden! Zie je deze pagina in Google? Laat het ons snel weten!'
+
 
 const fromroute = computed(() => {
     if('from' in route.query) {

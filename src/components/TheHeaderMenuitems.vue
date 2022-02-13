@@ -24,7 +24,8 @@
                         <h3 class="font-bold">{{ section.category }}</h3>
                         <router-link
                             v-for="pop in section.items"
-                            :to="{ name: 'Service', params: { slug: pop.pagedetails.slug } }"
+                            :data-test="pop.pagedetails.slug"
+                            :to="{ name: 'Serviceitem', params: { slug: pop.pagedetails.slug } }"
                             class="grid grid-cols-5 items-center min-w-full md:p-3 ease duration-150 rounded-md hover:bg-slate-100"
                             @click="togglePopover(item)"
                         >

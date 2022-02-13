@@ -1,23 +1,42 @@
 <template>
     <div>
-        <div class="bg-dark-blue px-3 pt-10 pb-32 md:px-28 md:py-40">
-            <h2 class="text-xl text-secondary font-semibold">De expertise die jij nodig hebt</h2>
-            <h1 class="text-4xl text-white font-semibold">Wordpress Webdevelopment</h1>
+        <div class="bg-dark-blue px-3 pt-10 pb-32 md:px-36 md:py-40 md:flex">
+            <div>
+                <h2 class="text-xl text-secondary font-semibold">{{getService.shortdescription}}</h2>
+                <h1 class="text-4xl text-white font-semibold">{{getService.shorttitel}}</h1>
+            </div>
+            <div class="flex flex-grow justify-end">
+                <router-link to="/services">
+                    <p class="text-secondary font-semibold">Onze Services</p>
+                    <p class="text-white">Bekijk al onze services op 1 plek</p>
+                </router-link>
+            </div>
         </div>
-        <div class="px-3 md:px-28 md:py-40">
-            <h2 class="text-3xl font-semibold">{{ getService.titel }}</h2>
-            <hr class="bg-dark-blue h-1 md:w-1/2" />
-            <div class="text-lg md:font-semibold py-10" v-html="getService.inleiding"></div>
+        <div class="px-3 md:px-36 md:py-24 relative">
+            <div id="tsparticles" class="absolute inset-0 -z-20"></div>
+
+            <div class="md:w-3/4 z-20 bg-white bg-opacity-90 p-5 rounded-md shadow-md">
+                <div>
+                    <h2 class="text-3xl font-semibold">{{ getService.titel }}</h2>
+                    <hr class="bg-dark-blue h-1 md:w-2/3" />
+                </div>
+
+                <div
+                    class="text-lg md:font-semibold py-10 ease-in-out duration-500 -translate-x-52 opacity-0"
+                    :class="animate"
+                    v-html="getService.inleiding"
+                ></div>
+            </div>
         </div>
-        <div class="md:flex md:px-28 md:py-20 md:gap-20">
+        <div class="md:flex md:px-36 md:py-20 md:gap-20">
             <div class="md:w-1/3">
-                <img src="https://via.placeholder.com/250/0000FF/808080?text=fotohier" alt />
+                <img src="/light-bulb.png" class="p-5 w-56 m-auto rounded-full" alt />
             </div>
             <div class="px-3 text-lg md:w-2/3 normal-ul">
                 <div class="px-3 text-lg md:w-2/3 normal-ul" v-html="getService.description"></div>
             </div>
         </div>
-        <div class="px-3 md:px-28 md:py-20 md:gap-10">
+        <div class="px-3 md:px-36 md:py-20 md:gap-10">
             <h2 class="text-3xl font-bold">Geïnteresseerd?</h2>
             <div class="md:flex mt-3">
                 <div class="py-5 px-20 bg-slate-50 rounded-md shadow-md text-center">
@@ -37,6 +56,7 @@
 <script>
 import { useRoute } from "vue-router";
 import BaseButton from "../components/BaseButton.vue"
+import { hexagons } from "../plugins/particles";
 import { useMain } from "../store/main";
 
 export default {
@@ -48,7 +68,7 @@ export default {
     },
     data() {
         return {
-            particles: null,
+            show: false,
             prices: {
                 cheap: [
                     "1 uur brainstorm",
@@ -74,18 +94,25 @@ export default {
         if (!this.getService) {
             this.setServices()
         }
+        hexagons()
+        setTimeout(() => {
+            this.show = true
+        }, 500);
     },
     methods: {
         setServices() {
             this.main.setServices(this.$route.params.slug)
-        }
+        },
     },
     computed: {
-        title() {
-            return "hi";
-        },
         getService() {
             return this.main.getServices(this.$route.params.slug)
+        },
+        animate() {
+            return {
+                'translate-x-0 opacity-100': this.show,
+
+            }
         }
     },
     watch: {
