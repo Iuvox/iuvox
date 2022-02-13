@@ -120,10 +120,11 @@ const routerBeforeEach = async(to, from) => {
 
         }
     }
+    const path = to.path.split('/')
     const params = {
         filter: {
             slug: {
-                _eq: to.path.split('/').at('-1')
+                _eq: path[path.length -1]
             }
         },
         fields: 'title, description'

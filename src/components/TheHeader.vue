@@ -115,6 +115,7 @@ export default {
         }
     },
     mounted() {
+ 
         api.get('/items/services?fields=*.*').then(res => {
             this.services = res.data.data
         })
