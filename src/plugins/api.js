@@ -3,7 +3,7 @@ import { useMain } from "../store/main"
 import { API_URL } from "./utils"
 
 const api = axios.create({
-    baseURL: "http://localhost:8055",
+    baseURL: API_URL,
     headers: {
         Authorization: 'Bearer heheiamabot'
     }

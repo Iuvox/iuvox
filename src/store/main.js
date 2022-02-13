@@ -73,7 +73,7 @@ export const useMain = defineStore('main', {
                     }
                 }
             }
-            const res = (await api.get(`http://localhost:8055/items/services?filter=${JSON.stringify(filter)}`)).data.data
+            const res = (await api.get(`/items/services?filter=${JSON.stringify(filter)}`)).data.data
             if(res.length === 0) {
                 return false
             }

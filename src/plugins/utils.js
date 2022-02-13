@@ -1,4 +1,4 @@
-const API_URL = (import.meta.env.DEV) ? 'http://localhost:8055' : import.meta.env.API_URL
+const API_URL = 'https://admin.iuvox.nl'
 
 const SCREEN_SIZES = {
     sm: 640,
