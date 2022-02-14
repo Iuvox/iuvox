@@ -9,7 +9,8 @@ const xmlTemplate = (obj = { url: String, loc: String, lastmod: Date, changefreq
         xml.push(`<loc>${obj.loc}</loc>`)
     }
     if (obj.lastmod) {
-        xml.push(`<lastmod>${obj.lastmod}</lastmod>`)
+        const date = new Date(obj.lastmod)
+        xml.push(`<lastmod>${date.toISOString()}</lastmod>`)
     }
     if (obj.priority) {
         xml.push(`<priority>${obj.priority}</priority>`)
@@ -49,7 +50,6 @@ const routes = [{
 module.exports = async(req, res) => {
 
     const isProd = process.env.NODE_ENV === 'production'
-
     if (isProd) {
         try {
             const sitemap = fs.readFileSync(resolve('../dist/server/sitemap.xml'), 'utf-8')
@@ -74,7 +74,7 @@ module.exports = async(req, res) => {
                 const base = (el.layout === null) ? '' : `${el.layout}/`
                 const slug = el.slug
 
-                xmlObj.loc = `${req.protocol}://${req.headers.host}/${base}${slug}`
+                xmlObj.loc = `https://${req.headers.host}/${base}${slug}`
                 xmlObj.lastmod = el.updated_at
                 xmlObj.priority = el.priority || 0.6
 
@@ -90,13 +90,13 @@ module.exports = async(req, res) => {
                     console.log(err)
                 }
             })
+            if (!isProd) {
+                res.set({ 'Content-Type': 'application/xml' }).send(sitemap)
+            }
         })
         .catch(err => {
             console.log(err)
         })
 
-    if (!isProd) {
-        res.set({ 'Content-Type': 'application/xml' }).send(sitemap)
-
-    }
+    
 }

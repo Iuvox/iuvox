@@ -106,7 +106,6 @@
                     <BaseButton tag="a" href="tel:+31649203503" class="ml-2 group">
                         Meteen Bellen
                         <template v-slot:icon="icon">
-                            <!-- <fa-icon icon="phone" class="group-hover:animate-ringing" /> -->
                         </template>
                     </BaseButton>
                 </template>
@@ -125,6 +124,7 @@ import { API_URL } from "../plugins/utils";
 import { useMain } from "../store/main";
 import { particles } from "../plugins/particles/";
 import { useRoute } from "vue-router";
+import { api } from "../plugins/api";
 
 
 
@@ -183,6 +183,14 @@ export default {
             return `${API_URL}/assets/${asset}`
         },
         handleSubmit(e) {
+            if(e.valid) {
+                const el = e.event.target.elements
+                api.post('/items/contact_requests', {
+                    naam: el.je_naam.value,
+                    email: el['je_e-mail'].value,
+                    bedrijf: el.je_bedrijf.value
+                })
+            }
             console.log(e)
         },
         startSlider(ms = 2000) {

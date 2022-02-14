@@ -1,5 +1,5 @@
 <template>
-    <form @submit.prevent="submitForm($event)" :novalidate="novalidation">
+    <form @submit.prevent="submitForm($event)" :novalidate="novalidation" :key="submitCount" ref="form">
         <slot name="input" :submitted="submitted"></slot>
         <slot name="submit" >
             <BaseButton type="submit" class="mt-3">Verstuur</BaseButton>
@@ -20,6 +20,8 @@ const props = defineProps({
 })
 
 const submitted = ref(false)
+const form = ref(null)
+const submitCount = ref(0)
 const emit = defineEmits(['submitted'])
 
 
@@ -30,6 +32,10 @@ const submitForm = (e) => {
         valid: valid 
     })
     submitted.value = true
+    if(valid) {
+        // form.value.reset()
+        submitCount.value += 1
+    }
 }
 
 
