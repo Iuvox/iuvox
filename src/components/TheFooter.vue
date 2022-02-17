@@ -1,6 +1,6 @@
 <template>
     <footer
-        class="bg-gray-50 h-min-96 py-10 md:px-52 md:px-30 grid md:grid-cols-3 gap-3 shadow-slate-600 shadow-2xl z-10"
+        class="bg-gray-50 h-min-96 py-10 gap-3 shadow-slate-600 shadow-2xl z-10 md:px-30 grid md:grid-cols-3 md:px-32 2xl:px-52"
     >
         <TheFooterCol title="Koffie drinken?">
             <p>
@@ -11,8 +11,14 @@
         </TheFooterCol>
         <TheFooterCol title="Ontdek">
             <ul>
-                <li v-for="i in 3">
-                    <router-link to="/merces-marketing">We were Merces Marketing</router-link>
+                <li>
+                    <router-link to="/home">Home</router-link>
+                </li>
+                <li>
+                    <router-link to="/contact-iuvox">Contact</router-link>
+                </li>
+                <li>
+                    <router-link to="/waarom-iuvox">Waarom Iuvox?</router-link>
                 </li>
             </ul>
         </TheFooterCol>

@@ -1,5 +1,5 @@
 <template>
-    <div class="relative h-min-40 py-5 md:py-56 px-4 md:px-52">
+    <div class="relative h-min-40 py-5 md:py-36 2xl:py-56 px-4 md:px-52">
         <div id="tsparticles" class="absolute inset-0 bg-dark-blue -z-10 pointer-events-none"></div>
         <div class="z-40"> 
             <h1 class="text-5xl font-bold text-secondary">
@@ -66,10 +66,10 @@
             <TransitionReplaceImage :images="images" :height="15" :duration="4000" />
         </div>
     </div>
-    <div class="bg-zinc-50 grid md:grid-cols-3 gap-5 md:p-10 h-min-96 px-5 md:px-72">
+    <div class="bg-zinc-50 grid gap-5 h-min-96 px-5 md:grid-cols-3 md:p-10 md:px-32 2xl:px-72">
         <HomeViewCta />
     </div>
-    <div class="py-10 px-5 md:px-48 grid md:grid-cols-2">
+    <div class="py-10 px-5 md:px-24 2xl:px-48 grid md:grid-cols-2">
         <div class="basis-full md:basis-1/3 md:px-32 font-serif m-auto">
             <p
                 class="text-4xl text-dark-blue"

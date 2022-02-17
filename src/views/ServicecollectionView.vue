@@ -9,7 +9,7 @@
             </div>
         </div>
         <div class="md:px-36 md:py-5 md:w-2/3">
-            <section v-for="section in sections" class="py-5" id="overview">
+            <section v-for="section in sections" class="py-5 px-3" id="overview">
                 <h2 class="font-bold text-4xl text-dark-blue">{{section.title}}</h2>
                 <p class="text-xl" v-html="section.body"></p>
                 <router-link to="/" class="flex items-center font-bold text-dark-blue mt-5 hover:text-secondary ease">Leer meer over {{section.title}} <ChevronIconRight class="w-6" />  </router-link>

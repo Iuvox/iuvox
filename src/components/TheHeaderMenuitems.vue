@@ -16,17 +16,17 @@
             <div
                 v-if="item.popoverOpen"
                 ref="popover"
-                class="fixed inset-0 mt-0 flex justify-center items-center h-screen md:h-auto md:absolute md:inset-auto md:right-0 bg-slate-200 shadow-md rounded-md px-3 py-2 ease transition duration-300 md:mt-3 text-black md:-translate-x-8 z-50"
+                class="fixed inset-0 mt-0 flex justify-center pt-24 md:pt-0 h-screen md:h-auto md:absolute md:inset-auto md:right-0 bg-slate-200 shadow-md rounded-md px-3 py-2 ease transition duration-300 md:mt-3 text-black md:-translate-x-8 z-50"
             >
-                <div class="md:flex">
+                <div class="md:flex w-full">
                     <button @click="togglePopover(item)" class="md:hidden">Terug</button>
                     <div v-for="section in item.popover" class="w-72">
-                        <h3 class="font-bold">{{ section.category }}</h3>
+                        <h3 class="font-bold mt-3">{{ section.category }}</h3>
                         <router-link
                             v-for="pop in section.items"
                             :data-test="pop.pagedetails.slug"
                             :to="{ name: 'Serviceitem', params: { slug: pop.pagedetails.slug } }"
-                            class="grid grid-cols-5 items-center min-w-full md:p-3 ease duration-150 rounded-md hover:bg-slate-100"
+                            class="grid grid-cols-5 items-center min-w-full md:p-3 ease duration-150 rounded-md hover:bg-slate-100 mt-3 md:mt-0"
                             @click="togglePopover(item)"
                         >
                             <div class="col-span-1">
@@ -72,7 +72,9 @@
     </li>
 </template>
 
-<script setup>import { watch } from 'vue';
+<script setup>
+import { watch } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 
 
 const props = defineProps({

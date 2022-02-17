@@ -48,6 +48,7 @@
             <nav
                 v-show="!collapsed"
                 class="fixed right-0 top-0 bottom-0 z-30 h-screen w-8/12 p-5 bg-slate-100 text-dark-blue md:relative md:p-0 md:text-inherit md:inset-auto md:h-auto md:w-auto md:bg-transparent md:flex-1 md:pr-20"
+                :class="mobileClass"
             >
                 <ul class="pt-2 flex justify-end flex-col md:flex-row gap-6">
                     <TheHeaderMenuitems :closeAll="closeall" :items="links" />
@@ -69,7 +70,6 @@
 </template>
 
 <script>
-import { SCREEN_SIZES } from "../plugins/utils";
 import BaseOverlay from "./BaseOverlay.vue"
 import BaseButton from "./BaseButton.vue";
 import MenuIcon from '../plugins/icons/MenuIcon.vue'
@@ -89,6 +89,9 @@ export default {
             closeall: false,
             headerheight: 82,
             services: [],
+            mobileClass: {
+                'mobile-hidden': true
+            },
             classes: {
                 active: "bg-white text-dark-blue py-3 drop-shadow-lg",
                 inactive: "bg-dark-blue text-white py-5"
@@ -115,7 +118,7 @@ export default {
         }
     },
     mounted() {
- 
+        this.mobileClass['mobile-hidden'] = false
         api.get('/items/services?fields=*.*').then(res => {
             this.services = res.data.data
         })
@@ -144,11 +147,7 @@ export default {
             }
         },
         collapsed() {
-            if (this.ismobile || null) {
-                return this.iscollapsed
-            } else {
-                return null
-            }
+            return this.iscollapsed
         },
         servicesColl() {
             const popover = {}
@@ -172,6 +171,24 @@ export default {
             return arr
         }
     },
+    watch: {
+        $route() {
+            this.iscollapsed = true
+        }
+    },
     components: { BaseOverlay, BaseButton, MenuIcon, CloseIcon, TheHeaderMenuitems }
 }
 </script>
+
+<style>
+@media screen and (max-width: 768px) {
+    nav.mobile-hidden {
+        display:none
+    }
+}
+@media screen and (min-width: 769px) {
+    nav{ 
+        display: block !important;
+    }    
+}
+</style>
