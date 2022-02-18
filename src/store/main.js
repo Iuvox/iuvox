@@ -9,6 +9,7 @@ export const useMain = defineStore('main', {
             loading: false,
             aboutpage: {},
             CmsPage: {},
+            definition: {},
             ServicePage: {}
         }
     },
@@ -26,6 +27,9 @@ export const useMain = defineStore('main', {
             } else {
                 return false
             }
+        },
+        getDefinition(state) {
+            return state.definition
         },
         getServices(state) {
             return (slug) => {
@@ -56,6 +60,23 @@ export const useMain = defineStore('main', {
             })
             this.aboutpage = res.data.data
             return res.data.data
+        },
+        async setDefinition(slug = String) {
+            const filter = {
+                pagedetails: {
+                    slug: {
+                        _eq: slug
+                    }
+                }
+            }
+            const res = (await api.get(`/items/wat_betekent?filter=${JSON.stringify(filter)}`)).data.data
+
+            if (res.length === 1) {
+                this.definition = res[0]
+                return res[0]
+            } else {
+                return {}
+            }
         },
         async setCmsPage(slug = String) {
             const res = await api.get(`/items/pages?filter[slug][_eq]=${slug}`)

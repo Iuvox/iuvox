@@ -61,7 +61,12 @@ module.exports = async(req, res) => {
                 'Authorization': 'Bearer admintoken'
             },
             params: {
-                fields: 'slug,layout,updated_at'
+                fields: 'slug,layout,updated_at',
+                filter: {
+                    status: {
+                        _eq: 'Published'
+                    }
+                }
             }
         })
         .then(result => {
@@ -71,7 +76,7 @@ module.exports = async(req, res) => {
             data.forEach(el => {
                 const xmlObj = {}
 
-                const base = (el.layout === null) ? '' : `${el.layout}/`
+                const base = (el.layout === null || el.layout === 'cmspage') ? '' : `${el.layout}/`
                 const slug = el.slug
 
                 xmlObj.loc = `https://${req.headers.host}/${base}${slug}`

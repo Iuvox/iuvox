@@ -34,6 +34,16 @@ useHead({
             name: 'apple-mobile-web-app-status-bar-style',
             content: 'black-translucent'
         }
+    ],
+    script: [
+        {
+            type: 'application/ld+json',
+            children: JSON.stringify({
+                '@context': 'https://schema.org',
+                '@type': 'Organization',
+                'url': 'https://iuvox.nl',
+            })
+        }
     ]
 })
 
