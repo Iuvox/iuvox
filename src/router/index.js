@@ -70,21 +70,23 @@ const routes = [{
         beforeEnter: async(to, from) => {
             const res = (await api.get(`/items/pages`, {
                 nofilter: true,
-                filter: {
-                    _and: [{
-                            slug: {
-                                _eq: to.params.slug
+                params: {
+                    filter: {
+                        _and: [{
+                                slug: {
+                                    _eq: to.params.slug
+                                }
+                            },
+                            {
+                                status: {
+                                    _eq: 'published'
+                                }
                             }
-                        },
-                        {
-                            status: {
-                                _eq: 'published'
-                            }
-                        }
-                    ]
+                        ]
+                    }
                 }
             })).data
-
+            const data = res.data
             if (data.redirect) {
                 return {
                     name: 'Page',
@@ -139,7 +141,10 @@ const routerBeforeEach = async(to, from) => {
             fields: 'title, description'
         }
 
+
         const meta = (await api.get(`/items/pages`, { params: params })).data.data
+
+
         if (meta.length === 1) {
             to.meta = {
                 ...to.meta,
