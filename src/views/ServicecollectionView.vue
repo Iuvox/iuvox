@@ -10,9 +10,16 @@
         </div>
         <div class="md:px-36 md:py-5 md:w-2/3">
             <section v-for="section in sections" class="py-5 px-3" id="overview">
-                <h2 class="font-bold text-4xl text-dark-blue">{{section.title}}</h2>
+                <h2 class="font-bold text-4xl text-dark-blue">{{ section.title }}</h2>
                 <p class="text-xl" v-html="section.body"></p>
-                <router-link to="/" class="flex items-center font-bold text-dark-blue mt-5 hover:text-secondary ease">Leer meer over {{section.title}} <ChevronIconRight class="w-6" />  </router-link>
+                <router-link
+                    v-if="link"
+                    :to="link"
+                    class="flex items-center font-bold text-dark-blue mt-5 hover:text-secondary ease"
+                >
+                    Leer meer over {{ section.title }}
+                    <ChevronIconRight class="w-6" />
+                </router-link>
             </section>
         </div>
     </div>
@@ -27,18 +34,22 @@ export default {
                 {
                     title: "Al onze diensten",
                     body: "Een opsomming van al onze diensten. Alles van Webdevelopment tot en met Data analyse en op maat oplossingen.",
+                    link: null,
                 },
                 {
                     title: "Webdevelopment",
-                    body: "Toch nog iets anders dan alleen development. Webdevelopment gaat over, zoals de naam zegt, het web. Alles wat je als persoon kan zien, naartoe kan navigeren beschouwen we als webdevelopment. Hier kunnen we gaan kijken naar toepassingen voor jullie zoals: <ul><li>Vue Webdevelopment</li><li>Wordpress Webdevelopment</li></ul>"
+                    body: "Toch nog iets anders dan alleen development. Webdevelopment gaat over, zoals de naam zegt, het web. Alles wat je als persoon kan zien, naartoe kan navigeren beschouwen we als webdevelopment. Hier kunnen we gaan kijken naar toepassingen voor jullie zoals: <ul><li>Vue Webdevelopment</li><li>Wordpress Webdevelopment</li></ul>",
+                    link: '/webdevelopment',
                 },
                 {
                     title: "Development",
-                    body: "Het 'lastige' stukje development. Hier gaan we vooral zitten op backend development. Denk aan de vragen <ul><li>Hoe wordt data opgehaald?</li><li>Hoe verwerken we de data</li><li>Hoe praat de voorkant met de achterkant van de website?</li></ul> Allemaal interessante vraagstukken. Hier is eigenlijk nooit een eenduidig antwoord op te zetten."
+                    body: "Het 'lastige' stukje development. Hier gaan we vooral zitten op backend development. Denk aan de vragen <ul><li>Hoe wordt data opgehaald?</li><li>Hoe verwerken we de data</li><li>Hoe praat de voorkant met de achterkant van de website?</li></ul> Allemaal interessante vraagstukken. Hier is eigenlijk nooit een eenduidig antwoord op te zetten.",
+                    link: null,
                 },
                 {
                     title: "Data-Analyse",
-                    body: "Denk maar is bij jezelf na. Hoe vaak maak je een beslissing op basis van feiten en hoe vaak op bsis van je onderbuik gevoel. Elke ondernemer heeft dat onderbuikgevoel, anders ben je geen ondernemer ;). Hoe mooi zou het kunnen zijn als je deze beslissingen sneller, beter en accurater kan maken? Daar gaat Data-Analyse over. Hoe verwerken we de Data. Hoe kunnen we het beste sturen op data?"
+                    body: "Denk maar is bij jezelf na. Hoe vaak maak je een beslissing op basis van feiten en hoe vaak op bsis van je onderbuik gevoel. Elke ondernemer heeft dat onderbuikgevoel, anders ben je geen ondernemer ;). Hoe mooi zou het kunnen zijn als je deze beslissingen sneller, beter en accurater kan maken? Daar gaat Data-Analyse over. Hoe verwerken we de Data. Hoe kunnen we het beste sturen op data?",
+                    link: null,
                 }
             ]
         };

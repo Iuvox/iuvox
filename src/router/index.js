@@ -68,16 +68,22 @@ const routes = [{
         name: 'Page',
         component: components.cmspage,
         beforeEnter: async(to, from) => {
-            const res = (await api.get(`/items/pages?filter[slug][_eq]=${to.params.slug}`)).data
-            if (res.data.length === 0) {
-                return {
-                    name: '404',
-                    query: {
-                        from: to.path
-                    }
+            const res = (await api.get(`/items/pages`, {
+                nofilter: true,
+                filter: {
+                    _and: [{
+                            slug: {
+                                _eq: to.params.slug
+                            }
+                        },
+                        {
+                            status: {
+                                _eq: 'published'
+                            }
+                        }
+                    ]
                 }
-            }
-            const data = res.data[0]
+            })).data
 
             if (data.redirect) {
                 return {
@@ -113,28 +119,39 @@ const createRouter = () => {
 }
 
 const routerBeforeEach = async(to, from) => {
-    if (to.name === 'Page') {
-        const res = (await api.get(`/items/pages?filter[slug][_eq]=${to.params.slug}`)).data.data
-        if (res.length > 0) {
-            to.meta.layout = res[0].layout
-
-        }
-    }
     const path = to.path.split('/')
-    const params = {
-        filter: {
-            slug: {
-                _eq: path[path.length -1]
-            }
-        },
-        fields: 'title, description'
-    }
-    if (to.path !== '/') {
+
+    if (to.path !== '/' && to.name !== '404') {
+        const params = {
+            filter: {
+                _and: [{
+                        slug: {
+                            _eq: path[path.length - 1]
+                        }
+                    },
+                    {
+                        status: {
+                            _in: ['published']
+                        }
+                    }
+                ]
+            },
+            fields: 'title, description'
+        }
+
         const meta = (await api.get(`/items/pages`, { params: params })).data.data
-        if (meta.length > 0) {
+        if (meta.length === 1) {
             to.meta = {
                 ...to.meta,
                 ...meta[0]
+            }
+        }
+        if (meta.length === 0) {
+            return {
+                name: '404',
+                query: {
+                    from: to.path
+                }
             }
         }
     }

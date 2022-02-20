@@ -5,14 +5,15 @@ const isProd = process.env.NODE_ENV === 'production'
 
 
 module.exports = async(req, res) => {
+    let robotsExists
 
     if (isProd) {
-      try {
-        const robots = fs.readFileSync(resolve('../dist/server/robots.txt'), 'utf-8')
-        res.end(robots)
-      } catch (error) {
-          
-      }
+        const robots = resolve('../dist/server/robots.txt')
+        robotsExists = fs.existsSync(robots)
+        
+        if(robotsExists) {
+            res.sendFile(robots)
+        }
     }
     const rules = [
         'User-agent: *',
@@ -24,7 +25,7 @@ module.exports = async(req, res) => {
             console.log(err)
         }
     })
-    if(!isProd) {
+    if(!isProd || !robotsExists) {
         res.end(file)
     }
 }

@@ -15,14 +15,14 @@ export const useMain = defineStore('main', {
     },
     getters: {
         getCases(state) {
-            if('cases' in state.homepage) {
+            if ('cases' in state.homepage) {
                 return state.homepage.cases
             } else {
                 return false
             }
         },
         getSections(state) {
-            if('sections' in state.aboutpage) {
+            if ('sections' in state.aboutpage) {
                 return state.aboutpage.sections
             } else {
                 return false
@@ -33,13 +33,13 @@ export const useMain = defineStore('main', {
         },
         getServices(state) {
             return (slug) => {
-                if(slug in state.ServicePage) {
+                if (slug in state.ServicePage) {
                     return state.ServicePage[slug]
                 } else {
                     return false
-                }        
+                }
             }
-            
+
         },
     },
     actions: {
@@ -50,7 +50,7 @@ export const useMain = defineStore('main', {
                 }
             })
             this.homepage.cases = res.data.data
-            return res            
+            return res
         },
         async setAboutPage() {
             const res = await api.get('/items/about', {
@@ -79,22 +79,39 @@ export const useMain = defineStore('main', {
             }
         },
         async setCmsPage(slug = String) {
-            const res = await api.get(`/items/pages?filter[slug][_eq]=${slug}`)
+            const res = await api.get(`/items/pages`, {
+                nofilter: true,
+                params: {
+                    filter: {
+                        _and: [{
+                            slug: {
+                                _eq: slug
+                            }
+                        }, {
+                            status: {
+                                _eq: 'published'
+                            }
+                        }]
+                    }
+                }
+            })
             return this.CmsPage[slug] = res.data.data[0]
         },
         async setServices(slug = String) {
-            if(slug in this.ServicePage) {
+            if (slug in this.ServicePage) {
                 return
             }
-            const filter = {
-                pagedetails: {
-                    slug: {
-                        _eq: slug
+            const params = {
+                filter: {
+                    pagedetails: {
+                        slug: {
+                            _eq: slug
+                        }
                     }
                 }
             }
-            const res = (await api.get(`/items/services?filter=${JSON.stringify(filter)}`)).data.data
-            if(res.length === 0) {
+            const res = (await api.get(`/items/services`, { params: params })).data.data
+            if (res.length === 0) {
                 return false
             }
             this.ServicePage[slug] = res[0]

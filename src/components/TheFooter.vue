@@ -52,3 +52,9 @@ export default {
     components: { TheFooterCol, BaseLink }
 }
 </script>
+
+<style>
+footer li {
+    margin: 6px 0px
+}
+</style>

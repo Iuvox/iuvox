@@ -36,19 +36,20 @@
             leave-to-class="opacity-0"
         >
             <div
-                class="px-10 py-3 flex flex-nowrap md:justify-center overflow-x-scroll snap-x snap-mandatory gap-10 h-24 scrollbar-none ease duration-1000"
+                class="px-10 py-3 flex flex-grow-0 flex-nowrap md:justify-center overflow-x-scroll snap-x snap-mandatory gap-10 h-24 scrollbar-none ease duration-1000"
                 v-if="main.getCases.length > 0"
             >
                 <router-link
                     v-for="case_ in main.getCases"
-                    class="flex min-w-max snap-center"
+                    class="flex snap-center h-full flex-shrink-0"
                     :to="{ name: 'Case', params: { case: case_.pagedetails.slug } }"
                     :key="case_"
                 >
+                <span class="visually-hidden">Ga naar {{case_.pagedetails.title}}</span>
                     <img
                         :src="imageUrl(case_.logo)"
-                        :alt="case_.pagedetails.name"
-                        class="h-auto w-full object-contain block grayscale ease-linear duration-200 hover:grayscale-0"
+                        :alt="case_.pagedetails.title"
+                        class="h-full w-auto object-contain block grayscale ease-linear duration-200 hover:grayscale-0"
                     />
                 </router-link>
             </div>
@@ -194,8 +195,23 @@ export default {
             console.log(e)
         },
         startSlider(ms = 2000) {
+            const slider = this.$refs.scrollElement
+            const length = this.main.getCases.length
+            
+            let i = 1
             this.interval = setInterval(() => {
-                this.whichimage = (this.images.length === (this.whichimage + 1)) ? 0 : this.whichimage + 1
+                var scrollx = 50
+                 if(i === length) {
+                    scrollx = - (2000 * length)
+                    i = 1
+                }
+                slider.scrollBy({
+                    left: scrollx,
+                    top:0,
+                    behavior: 'smooth'
+                })
+               
+                i++
             }, ms);
         },
         killSlider() {

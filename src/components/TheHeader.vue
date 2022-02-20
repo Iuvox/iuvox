@@ -30,8 +30,15 @@
                 enter-from-class="-rotate-180 opacity-0"
                 leave-to-class="rotate-180 opacity-0"
             >
-                <MenuIcon key="menuicon" class="absolute w-10" v-show="iscollapsed" />
+                <span class="visually-hidden">Menu</span>
+                <MenuIcon
+                    key="menuicon"
+                    class="absolute w-10"
+                    aria-hidden="true"
+                    v-show="iscollapsed"
+                />
                 <CloseIcon
+                    aria-hidden="true"
                     key="closeicon"
                     class="absolute w-10 text-dark-blue"
                     v-show="!iscollapsed"
@@ -80,7 +87,7 @@ import { api } from "../plugins/api";
 
 export default {
     setup() {
-    
+
     },
     data() {
         return {
@@ -183,12 +190,12 @@ export default {
 <style>
 @media screen and (max-width: 768px) {
     nav.mobile-hidden {
-        display:none
+        display: none;
     }
 }
 @media screen and (min-width: 769px) {
-    nav{ 
+    nav {
         display: block !important;
-    }    
+    }
 }
 </style>

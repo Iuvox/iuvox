@@ -8,20 +8,40 @@ const api = axios.create({
         Authorization: 'Bearer heheiamabot'
     }
 })
-// api.interceptors.request.use(config => {
-//     const main = useMain()
-//     main.setLoading(true)
+api.interceptors.request.use(config => {
+    if(config.url.includes('/items/pages')) {
+        return config
+    }
 
-//     return config
-// })
-// api.interceptors.response.use((response) => {
-//     const main = useMain()
-//     main.setLoading(false)
-//     return response;
-// }, (error) => {
-//     const main = useMain()
-//     main.setLoading(false)
-//     return error
-// });
+    if('nofilter' in config && config.nofilter === true) {
+        return config
+    }
+    
+    const statusFilter = {
+        pagedetails: {
+            status: {
+                _in: ['published']
+            }
+        }
+    }
+
+    if (!('params' in config)) {
+        config.params = {
+            filter: statusFilter
+        }
+        return config
+    }
+
+    if ('params' in config && 'filter' in config.params) {
+        config.params = {
+            _and: [{
+                    ...config.params.filter
+                },
+                statusFilter
+            ]
+        }
+    }
+    return config
+})
 
 export { api }

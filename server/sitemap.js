@@ -48,13 +48,17 @@ const routes = [{
 
 
 module.exports = async(req, res) => {
-
+    let sitemapExists
     const isProd = process.env.NODE_ENV === 'production'
+    
     if (isProd) {
-        try {
-            const sitemap = fs.readFileSync(resolve('../dist/server/sitemap.xml'), 'utf-8')
-            res.set({ 'Content-Type': 'application/xml' }).send(sitemap)
-        } catch (error) {}
+        const sitemap = resolve('../dist/server/sitemap.xmll')
+        sitemapExists = fs.existsSync(sitemap)
+
+        if(sitemapExists) {
+            res.set({ 'Content-Type': 'application/xml' }).sendFile(sitemap)
+        }
+
     }
     axios.get('http://admin.iuvox.nl/items/pages', {
             headers: {
@@ -64,7 +68,7 @@ module.exports = async(req, res) => {
                 fields: 'slug,layout,updated_at',
                 filter: {
                     status: {
-                        _eq: 'Published'
+                        _in: ['Published']
                     }
                 }
             }
@@ -95,7 +99,7 @@ module.exports = async(req, res) => {
                     console.log(err)
                 }
             })
-            if (!isProd) {
+            if (!isProd || !sitemapExists) {
                 res.set({ 'Content-Type': 'application/xml' }).send(sitemap)
             }
         })
