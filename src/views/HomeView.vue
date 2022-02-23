@@ -1,7 +1,7 @@
 <template>
     <div class="relative h-min-40 py-5 md:py-36 2xl:py-56 px-4 md:px-52">
         <div id="tsparticles" class="absolute inset-0 bg-dark-blue -z-10 pointer-events-none"></div>
-        <div class="z-40"> 
+        <div class="z-40">
             <h1 class="text-5xl font-bold text-secondary">
                 Welkom bij
                 <span class="font-serif">Iuvox</span>
@@ -45,7 +45,10 @@
                     :to="{ name: 'Case', params: { case: case_.pagedetails.slug } }"
                     :key="case_"
                 >
-                <span class="visually-hidden">Ga naar {{case_.pagedetails.title}}</span>
+                    <span
+                        class="visually-hidden"
+                        :key="'hidden_visual'"
+                    >Ga naar {{ case_.pagedetails.title }}</span>
                     <img
                         :src="imageUrl(case_.logo)"
                         :alt="case_.pagedetails.title"
@@ -106,8 +109,7 @@
                     <BaseButton class="mt-3" type="submit">Verstuur</BaseButton>
                     <BaseButton tag="a" href="tel:+31649203503" class="ml-2 group">
                         Meteen Bellen
-                        <template v-slot:icon="icon">
-                        </template>
+                        <template v-slot:icon="icon"></template>
                     </BaseButton>
                 </template>
             </BaseForm>
@@ -184,7 +186,7 @@ export default {
             return `${API_URL}/assets/${asset}`
         },
         handleSubmit(e) {
-            if(e.valid) {
+            if (e.valid) {
                 const el = e.event.target.elements
                 api.post('/items/contact_requests', {
                     naam: el.je_naam.value,
@@ -197,20 +199,24 @@ export default {
         startSlider(ms = 2000) {
             const slider = this.$refs.scrollElement
             const length = this.main.getCases.length
-            
+
             let i = 1
             this.interval = setInterval(() => {
                 var scrollx = 50
-                 if(i === length) {
+                if (i === length) {
                     scrollx = - (2000 * length)
                     i = 1
                 }
-                slider.scrollBy({
-                    left: scrollx,
-                    top:0,
-                    behavior: 'smooth'
-                })
-               
+                try {
+                    slider.scrollBy({
+                        left: scrollx,
+                        top: 0,
+                        behavior: 'smooth'
+                    })
+                } catch (error) {
+                    this.killSlider()
+                }
+
                 i++
             }, ms);
         },

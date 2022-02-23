@@ -1,5 +1,6 @@
 import { api } from '../plugins/api'
 import { createMemoryHistory, createRouter as _createRouter, createWebHistory } from 'vue-router'
+import { gtmEvent } from '../plugins/gtm'
 
 const components = {
     home: () =>
@@ -162,4 +163,14 @@ const routerBeforeEach = async(to, from) => {
     }
 }
 
-export { createRouter, routerBeforeEach, components, routes }
+const routerAfterEach = (to, from) => {
+    if(!import.meta.env.SSR) {
+        gtmEvent({
+            event: "pageView",
+            from: from.path,
+            to: to.path
+        })
+    }
+}
+
+export { createRouter, routerBeforeEach, routerAfterEach, components, routes }

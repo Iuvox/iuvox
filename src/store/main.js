@@ -97,7 +97,7 @@ export const useMain = defineStore('main', {
             })
             return this.CmsPage[slug] = res.data.data[0]
         },
-        async setServices(slug = String) {
+        async setServices(slug) {
             if (slug in this.ServicePage) {
                 return
             }

@@ -30,7 +30,7 @@
                 enter-from-class="-rotate-180 opacity-0"
                 leave-to-class="rotate-180 opacity-0"
             >
-                <span class="visually-hidden">Menu</span>
+                <span class="visually-hidden" key="visually-hidden md:hidden">Menu</span>
                 <MenuIcon
                     key="menuicon"
                     class="absolute w-10"

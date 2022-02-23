@@ -33,7 +33,7 @@ api.interceptors.request.use(config => {
     }
 
     if ('params' in config && 'filter' in config.params) {
-        config.params = {
+        config.params.filter = {
             _and: [{
                     ...config.params.filter
                 },
