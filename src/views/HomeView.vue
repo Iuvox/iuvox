@@ -39,22 +39,16 @@
                 class="px-10 py-3 flex flex-grow-0 flex-nowrap md:justify-center overflow-x-scroll snap-x snap-mandatory gap-10 h-24 scrollbar-none ease duration-1000"
                 v-if="main.getCases.length > 0"
             >
-                <router-link
-                    v-for="case_ in main.getCases"
-                    class="flex snap-center h-full flex-shrink-0"
-                    :to="{ name: 'Case', params: { case: case_.pagedetails.slug } }"
-                    :key="case_"
-                >
-                    <span
-                        class="visually-hidden"
-                        :key="'hidden_visual'"
-                    >Ga naar {{ case_.pagedetails.title }}</span>
-                    <img
-                        :src="imageUrl(case_.logo)"
-                        :alt="case_.pagedetails.title"
-                        class="h-full w-auto object-contain block grayscale ease-linear duration-200 hover:grayscale-0"
-                    />
-                </router-link>
+                <div v-for="case_ in main.getCases" class="flex-shrink-0">
+                   <router-link :aria-label="'Ga naar' +case_.pagedetails.title " :to="{ name: 'Case', params: { case: case_.pagedetails.slug } }">
+                        <img
+                            :src="imageUrl(case_.logo)"
+                            :alt="case_.pagedetails.title"
+                            class="h-full w-auto object-contain block grayscale ease-linear duration-200 hover:grayscale-0"
+                        />
+                        
+                   </router-link>
+                </div>
             </div>
         </Transition>
     </section>
