@@ -48,7 +48,7 @@ useHead({
 })
 
 onMounted(() => {
-    // gtmInit()
+    gtmInit()
 })
 
 </script>

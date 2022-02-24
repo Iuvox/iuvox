@@ -4,6 +4,9 @@ import { api } from '../plugins/api'
 export const useMain = defineStore('main', {
     state: () => {
         return {
+            analytics: {
+                accepted: true
+            },
             homepage: {},
             aboutus: {},
             loading: false,
@@ -41,6 +44,9 @@ export const useMain = defineStore('main', {
             }
 
         },
+        getAnalyticsPermissions(state) {
+            return state.analytics
+        }
     },
     actions: {
         async setHomeView() {

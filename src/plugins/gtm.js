@@ -1,13 +1,17 @@
+import { useMain } from "../store/main";
 
 const gtmInit = () => {
     if (('gtmInit' in window) === false) {
-        (function(w, d, s, l, i) { w[l] = w[l] || [];
-            w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0],
+        (function(w, d, s, l, i) {
+            w[l] = w[l] || [];
+            w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+            var f = d.getElementsByTagName(s)[0],
                 j = d.createElement(s),
                 dl = l != 'dataLayer' ? '&l=' + l : '';
             j.async = true;
             j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
-            f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-N4N33FT')
+            f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-N4N33FT')
         window.dataLayer.push({
             event: "pageView",
             to: window.location.href.replace(window.location.origin, '')
@@ -17,7 +21,8 @@ const gtmInit = () => {
 }
 
 const gtmEvent = (params) => {
-    if (!import.meta.env.SSR) {
+    if (!
+        import.meta.env.SSR) {
         if ('dataLayer' in window) {
             window.dataLayer.push(params)
         }
