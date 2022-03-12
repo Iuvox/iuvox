@@ -2,7 +2,7 @@
   "name": "iuvox",
   "version": "0.1.0",
   "scripts": {
-    "dev": "node server",
+    "dev": "nodemon server",
     "build": "npm run build:client && npm run build:server",
     "build:noExternal": "npm run build:client && npm run build:server:noExternal",
     "build:client": "vite build --ssrManifest --outDir dist/client",
@@ -26,18 +26,19 @@
     "compression": "^1.7.4",
     "cross-env": "^7.0.3",
     "express": "^4.17.2",
-    "nodemon": "^2.0.15",
+    "lucide-vue-next": "^0.17.9",
     "pinia": "^2.0.10",
     "tsparticles": "^1.41.0"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^2.0.1",
     "autoprefixer": "^10.4.2",
+    "nodemon": "^2.0.15",
     "postcss": "^8.4.5",
     "sass": "^1.48.0",
     "tailwindcss": "^3.0.13",
     "vite": "^2.7.12",
-    "vue": "^3.2.30",
+    "vue": "^3.2.31",
     "vue-router": "^4.0.12"
   }
 }

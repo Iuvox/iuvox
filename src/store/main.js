@@ -7,10 +7,12 @@ export const useMain = defineStore('main', {
             analytics: {
                 accepted: true
             },
+            defaults: {},
             homepage: {},
             aboutus: {},
             loading: false,
             aboutpage: {},
+            cases: {},
             CmsPage: {},
             definition: {},
             ServicePage: {}
@@ -44,8 +46,23 @@ export const useMain = defineStore('main', {
             }
 
         },
+        getCase(state) {
+            return (slug) => {
+                if (slug in state.cases) {
+                    return state.cases[slug]
+                } else {
+                    return false
+                }
+            }
+        },
+        getAllCases(state) {
+            return state.cases
+        },
         getAnalyticsPermissions(state) {
             return state.analytics
+        },
+        getDefaults(state) {
+            return state.defaults
         }
     },
     actions: {
@@ -57,6 +74,25 @@ export const useMain = defineStore('main', {
             })
             this.homepage.cases = res.data.data
             return res
+        },
+        async setDefaults() {
+            const res = await api.get('/items/defaults', {
+                params: {
+                    fields: 'telefoon_nummer,telefoon_nummer_fancy,email,headshots.directus_files_id.id,headshots.directus_files_id.title,headshots.directus_files_id.description'
+                }
+            }).catch(err => {
+                const defaults = {
+                    data: {
+                        data: {
+                            telefoon_nummer: '+31649203503',
+                            telefoon_nummer_fancy: '+31 (0)6 49 203 503',
+                            email: 'joep@iuvox.nl'
+                        }
+                    }
+                }
+                return defaults
+            })
+            this.defaults = res.data.data
         },
         async setAboutPage() {
             const res = await api.get('/items/about', {
@@ -121,6 +157,35 @@ export const useMain = defineStore('main', {
                 return false
             }
             this.ServicePage[slug] = res[0]
+        },
+        async setCase(slug = false) {
+            if (slug in this.cases) {
+                return
+            }
+            const params = {
+                fields: 'over,logo,uitdagingen,quotes,resultaat,used_services.services_id.pagedetails.slug,used_services.services_id.shorttitel,accomplishments,pagedetails.*',
+                filter: {
+                    pagedetails: {
+                        slug: {
+                            _eq: slug
+                        }
+                    }
+                }
+            }
+            if(slug === false) {
+                params['filter'] = false
+            }
+            const res = (await api.get(`/items/cases`, { params: params })).data.data
+            if (res.length === 0) {
+                return false
+            }
+            if(slug === false) {
+                res.forEach(el => {
+                    this.cases[el.pagedetails.slug] = el
+                });
+                return;
+            }
+            this.cases[slug] = res[0]
         },
         setLoading(bool = Boolean) {
             this.loading = bool

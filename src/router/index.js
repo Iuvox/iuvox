@@ -6,7 +6,8 @@ const components = {
     home: () =>
         import ('/src/views/HomeView.vue'),
     case: () =>
-        import ('/src/views/CmsPage.vue'),
+        import ('/src/views/CaseView.vue'),
+    caseCollection: () => import('/src/views/CaseCollectionView.vue'),
     about: () =>
         import ('/src/views/AboutView.vue'),
     contact: () =>
@@ -27,6 +28,11 @@ const routes = [{
         path: '/',
         name: 'Home',
         component: components.home
+    },
+    {
+        path: '/cases',
+        name: 'Cases',
+        component: components.caseCollection
     },
     {
         path: '/cases/:case',
@@ -139,12 +145,11 @@ const routerBeforeEach = async(to, from) => {
                     }
                 ]
             },
-            fields: 'title, description'
+            fields: 'title,description'
         }
 
 
         const meta = (await api.get(`/items/pages`, { params: params })).data.data
-
 
         if (meta.length === 1) {
             to.meta = {
@@ -164,7 +169,7 @@ const routerBeforeEach = async(to, from) => {
 }
 
 const routerAfterEach = (to, from) => {
-    if(!import.meta.env.SSR) {
+    if(!import.meta.env.SSR && import.meta.env.PROD) {
         gtmEvent({
             event: "pageView",
             from: from.path,

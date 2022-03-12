@@ -2,11 +2,16 @@
 import TheHeader from "./components/TheHeader.vue"
 import TheFooter from "./components/TheFooter.vue";
 import { useHead } from "@vueuse/head";
-import { computed, onMounted } from "vue";
-import { useRoute, useRouter } from "vue-router";
+import { computed, onMounted, onServerPrefetch } from "vue";
+import { useRoute } from "vue-router";
 import { gtmInit } from './plugins/gtm'
+import { useMain } from "./store/main";
 
 const route = useRoute()
+const main = useMain()
+
+onServerPrefetch(() => main.setDefaults())
+onMounted(() => main.setDefaults())
 
 useHead({
     title: computed(() => ('title' in route.meta) ? `${route.meta.title} | Iuvox` : `${route.name} | Iuvox`),
@@ -84,5 +89,8 @@ h6 {
     position: absolute;
     white-space: nowrap;
     width: 1px;
+}
+svg.lucide {
+    display: inline;
 }
 </style>

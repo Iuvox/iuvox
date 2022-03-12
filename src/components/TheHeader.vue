@@ -115,6 +115,12 @@ export default {
                     routerLink: {
                         name: "Waarom Iuvox?"
                     }
+                },
+                cases: {
+                    name: "Cases",
+                    routerLink: {
+                        name: "Cases"
+                    }
                 }
             }
         };
