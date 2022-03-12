@@ -5,10 +5,9 @@
         :class="headerClass"
     >
         <div class="flex flex-1 items-center">
-            <router-link to="/">
-                <h1 class="text-4xl">
-                    <span class="font-serif">IUVOX</span>
-                </h1>
+            <router-link to="/" class="h-12">
+                <img class="w-full h-full" v-if="scrolling" src="https://admin.iuvox.nl/assets/9831ca51-535b-4972-b7af-34dc652c0959?width=200&height=100" alt="">
+                <span v-if="!scrolling" class="font-serif font-bold text-4xl">IUVOX</span>
             </router-link>
         </div>
         <BaseButton

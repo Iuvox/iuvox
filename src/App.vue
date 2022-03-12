@@ -47,6 +47,7 @@ useHead({
                 '@context': 'https://schema.org',
                 '@type': 'Organization',
                 'url': 'https://iuvox.nl',
+                'logo': 'https://admin.iuvox.nl/assets/9831ca51-535b-4972-b7af-34dc652c0959'
             })
         }
     ]
