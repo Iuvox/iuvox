@@ -72,9 +72,9 @@ async function createServer(
             const html = await render(url, manifest, template)
             res.status(200).set({ 'Content-Type': 'text/html' }).end(html)
         } catch (e) {
-        //     _vite && _vite.ssrFixStacktrace(e)
-        //     console.log(e.stack)
-        //     res.status(500).end(e.stack)
+            _vite && _vite.ssrFixStacktrace(e)
+            console.log(e.stack)
+            res.status(500).end(e.stack)
         }
     })
 
