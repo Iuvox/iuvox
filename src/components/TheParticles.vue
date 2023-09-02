@@ -14,16 +14,16 @@
 <script setup>
 import { onMounted, ref,watch } from "vue";
 import { useElementVisibility } from '@vueuse/core'
-import { tsParticles } from "tsparticles";
+// import { tsParticles } from "tsparticles";
 
 
 onMounted(async () => {
     console.log(' hii')
 
-    await tsParticles.load({
-        id: "tsparticles",
-        options: props.options  ,
-    });
+    // await tsParticles.load({
+    //     id: "tsparticles",
+    //     options: props.options  ,
+    // });
 })
 
 const particles= ref(false)
