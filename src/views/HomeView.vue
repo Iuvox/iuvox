@@ -1,5 +1,5 @@
 <template>
-    <div class="relative h-min-40 py-5 md:py-36 2xl:py-56 px-4 md:px-52">
+    <div class="relative h-min-40 py-5 md:py-36 2xl:py-56 px-4 lg:px-52">
        <TheParticles class="absolute inset-0 bg-dark-blue -z-10 pointer-events-none" :options="lines" />
         <div class="z-40">
             <h1 class="text-5xl font-bold text-secondary">
@@ -53,7 +53,7 @@
             </div>
         </Transition>
     </section>
-    <div class="grid md:grid-cols-2 bg-secondary bg-opacity-70 px-5 md:pb-16 items-center md:px-48">
+    <div class="grid md:grid-cols-2 bg-secondary bg-opacity-70 px-5 md:pb-16 items-center lg:px-48">
         <div>
             <p class="text-black text-4xl mb-3">
                 Je kent ons nog niet, maar nu wel. Ontmoet
@@ -65,11 +65,11 @@
             <TransitionReplaceImage :images="images" :height="15" :duration="4000" />
         </div>
     </div>
-    <div class="bg-zinc-50 grid gap-5 h-min-96 px-5 md:grid-cols-3 md:p-10 md:px-32 2xl:px-72">
+    <div class="bg-zinc-50 grid gap-5 h-min-96 px-5 md:grid-cols-3 md:p-10 lg:px-32 2xl:px-72">
         <HomeViewCta />
     </div>
-    <div class="py-10 px-5 md:px-24 2xl:px-48 grid md:grid-cols-2">
-        <div class="basis-full md:basis-1/3 md:px-32 font-serif m-auto">
+    <div class="py-10 px-5 sm:px-10 lg:px-24 2xl:px-48 grid md:grid-cols-2">
+        <div class="basis-full md:basis-1/3 lg:px-32 font-serif m-auto">
             <p
                 class="text-4xl text-dark-blue"
             >Geïntereseerd geraakt? Neem contact met ons op. We komen snel bij je terug!</p>

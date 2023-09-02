@@ -5,7 +5,7 @@
     >
         <p class="text-slate-700 text-sm group-hover:text-white">{{ cta.category }}</p>
         <h2 class="text-lg mt-3">{{ cta.title }}</h2>
-        <p v-html="cta.description" class="h-32"></p>
+        <p v-html="cta.description" class="mb-5"></p>
         <router-link class="underline text-dark-blue font-semibold group-hover:text-white" :to="cta.routerLink">Lees meer 
         <!-- <fa-icon icon="chevron-right" size="xs" /> -->
          </router-link>
