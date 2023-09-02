@@ -30,7 +30,7 @@ const gtmEvent = (params) => {
 }
 
 const pageView = () => {
-    gtmInit({
+    gtmEvent({
         event: "pageView",
         from: from.path,
         to: to.path
