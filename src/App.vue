@@ -32,10 +32,6 @@ useHead({
             content: '/favicon.png'
         },
         {
-            itemprop: 'test',
-            content: 'test'
-        },
-        {
             name: 'apple-mobile-web-app-status-bar-style',
             content: 'black-translucent'
         }
@@ -51,10 +47,6 @@ useHead({
             })
         }
     ]
-})
-
-onMounted(() => {
-    gtmInit()
 })
 
 </script>

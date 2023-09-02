@@ -6,7 +6,6 @@ import { createServer as _createServer } from 'vite'
 import serveStatic from 'serve-static'
 import compression from 'compression'
 import { fileURLToPath } from 'url'
-import { FolderGit } from 'lucide-vue-next'
 
 const isTest = process.env.NODE_ENV === 'test' || !!process.env.VITE_TEST_BUILD
 
@@ -17,10 +16,6 @@ async function createServer(
     const resolve = (p) => {
         const _path = path.resolve(dirname(fileURLToPath(import.meta.url)), p)
         return _path
-    }
-    let indexProd;
-    if(isProd) {
-        let indexProd = fs.readFileSync(resolve('../dist/client/index.html'), 'utf-8')
     }
 
     // const manifest = isProd ?
@@ -65,7 +60,7 @@ async function createServer(
 
                 render = (await _vite.ssrLoadModule(resolve('../src/entry-server.js'))).render
             } else {
-                template = indexProd
+                template = fs.readFileSync(resolve('../dist/client/index.html'), 'utf-8')
                 let modulename = '../dist/server/entry-server.js'
                 render = (await import(modulename)).render
             }
