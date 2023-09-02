@@ -33,7 +33,7 @@ const props = defineProps({
 })
 const classreset = computed(() => {
     return {
-        'grow-0 items-start bg-dark-blue text-white rounded pl-5 pr-5 py-1 drop-shadow-lg': !props.reset,
+        'grow-0 items-start bg-dark-blue text-white rounded pl-5 pr-5 py-1 drop-shadow-lg': !props.reset && !props.inverse,
         'grow-0 items-start bg-white text-dark-blue rounded pl-5 pr-5 py-1 drop-shadow-lg': props.inverse
     }
 })

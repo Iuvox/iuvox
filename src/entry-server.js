@@ -18,10 +18,10 @@ export const genHtml = (template, appHtml, preloadLinks, headTags, htmlAttrs, bo
 
 export async function render(url, manifest, template) {
     const { app, router, pinia, head } = createApp()
-
+    
     // set the router to the desired URL before rendering
     router.push(url)
-
+    
     await router.isReady()
 
     // passing SSR context object which will be available via useSSRContext()
@@ -40,7 +40,6 @@ export async function render(url, manifest, template) {
     // which we can then use to determine what files need to be preloaded for this
     // request.
     const preloadLinks = '' //renderPreloadLinks(ctx.modules, manifest)
-
 
     return genHtml(template, html, preloadLinks, headTags, htmlAttrs, bodyAttrs)
 }

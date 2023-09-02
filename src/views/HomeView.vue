@@ -1,6 +1,6 @@
 <template>
     <div class="relative h-min-40 py-5 md:py-36 2xl:py-56 px-4 md:px-52">
-        <div id="tsparticles" class="absolute inset-0 bg-dark-blue -z-10 pointer-events-none"></div>
+       <TheParticles class="absolute inset-0 bg-dark-blue -z-10 pointer-events-none" :options="lines" />
         <div class="z-40">
             <h1 class="text-5xl font-bold text-secondary">
                 Welkom bij
@@ -13,7 +13,8 @@
                 <BaseButton
                     tag="router-link"
                     to="/waarom-iuvox"
-                    class="inline-flex items-center px-4 py-2 font-semibold leading-6 text-sm shadow rounded-md text-dark-blue bg-white transition ease-in-out duration-150 delay-150 ring-1 ring-slate-900/10"
+                    class="inline-flex items-center px-4 py-2 font-semibold leading-6 text-sm"
+                    :inverse="true"
                 >Leer ons kennen</BaseButton>
                 <span class="flex absolute h-3 w-3 top-0 right-0 -mt-1 -mr-1">
                     <span
@@ -115,14 +116,14 @@
 import BaseButton from "../components/BaseButton.vue";
 import BaseInput from "../components/BaseInput.vue";
 import BaseForm from "../components/BaseForm.vue";
+import TheParticles from "../components/TheParticles.vue"
 import TransitionReplaceImage from "../components/TransitionReplaceImage.vue";
 import HomeViewCta from "../components/HomeViewCta.vue";
 import { API_URL } from "../plugins/utils";
 import { useMain } from "../store/main";
-import { particles } from "../plugins/particles/";
+import { lines } from "../plugins/particles/";
 import { useRoute } from "vue-router";
 import { api } from "../plugins/api";
-
 
 
 export default {
@@ -167,13 +168,13 @@ export default {
         if (!this.main.getCases) {
             this.main.setHomeView()
         }
-        if (!import.meta.env.SSR) {
-            particles()
-        }
         this.startSlider(4000)
     },
     beforeDestroy() {
         this.killSlider()
+    },
+    computed: {
+        lines: () => (lines)
     },
     methods: {
         imageUrl(asset) {
@@ -218,9 +219,9 @@ export default {
             if (this.interval) {
                 clearInterval(this.interval)
             }
-        },
+        }
     },
-    components: { BaseButton, BaseInput, BaseForm, TransitionReplaceImage, HomeViewCta }
+    components: { BaseButton, BaseInput, BaseForm, TransitionReplaceImage, HomeViewCta , TheParticles}
 }
 </script>
 <style>

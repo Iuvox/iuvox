@@ -14,6 +14,7 @@
         </div>
         <div class="px-3 md:px-36 md:py-24 relative">
             <div id="tsparticles" class="absolute inset-0 -z-20"></div>
+            <TheParticles :options="presetCircles" />
 
             <div class="md:w-3/4 z-20 bg-white bg-opacity-90 p-5 rounded-md shadow-md">
                 <div>
@@ -43,8 +44,9 @@
 <script>
 import { useRoute } from "vue-router";
 import BaseButton from "../components/BaseButton.vue"
-import { hexagons } from "../plugins/particles";
 import { useMain } from "../store/main";
+import { presetCircles } from "../plugins/particles/";
+import TheParticles from "../components/TheParticles.vue"
 
 export default {
     setup() {
@@ -81,7 +83,6 @@ export default {
         if (!this.getService) {
             this.setServices()
         }
-        hexagons()
         setTimeout(() => {
             this.show = true
         }, 500);
@@ -100,6 +101,9 @@ export default {
                 'translate-x-0 opacity-100': this.show,
 
             }
+        },
+        presetCircles() {
+            return presetCircles
         }
     },
     watch: {
@@ -107,7 +111,7 @@ export default {
             this.setServices()
         }
     },
-    components: { BaseButton }
+    components: { BaseButton, TheParticles}
 }
 </script>
 <style lang="postcss">

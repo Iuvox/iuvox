@@ -1,11 +1,11 @@
 import axios from "axios"
 import { useMain } from "../store/main"
-import { API_URL } from "./utils"
+import { API_URL, API_KEY } from "./utils"
 
 const api = axios.create({
     baseURL: API_URL,
     headers: {
-        Authorization: 'Bearer heheiamabot'
+        Authorization: `Bearer ${API_KEY}`
     }
 })
 api.interceptors.request.use(config => {
@@ -43,5 +43,15 @@ api.interceptors.request.use(config => {
     }
     return config
 })
+
+api.interceptors.response.use(
+    response => {
+        return Promise.resolve(response)
+    }, 
+    error => {
+        return Promise.reject(error)
+
+    }
+)
 
 export { api }

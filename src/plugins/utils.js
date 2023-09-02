@@ -1,4 +1,7 @@
-const API_URL = 'https://admin.iuvox.nl'
+const API_URL = import.meta.env.VITE_API_URL
+
+const API_KEY = import.meta.env.VITE_API_KEY
+
 
 const SCREEN_SIZES = {
     sm: 640,
@@ -10,4 +13,4 @@ const SCREEN_SIZES = {
 
 const WHEREAMI = import.meta.env.SSR ? 'Server' : 'Client'
 
-export { API_URL, SCREEN_SIZES, WHEREAMI }
+export { API_URL,API_KEY, SCREEN_SIZES, WHEREAMI }

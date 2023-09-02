@@ -23,6 +23,5 @@ export function createApp() {
         .use(head)
 
 
-
     return { app, router, pinia, head }
 }

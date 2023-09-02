@@ -1,15 +1,15 @@
-import {tsParticles} from 'tsparticles'
+// import { tsParticles } from "tsparticles"; // this is the new common package
+
 import lines from './lines'
 import presetCircles from './preset-circles'
 
-
-
 const particles = () => {
-   tsParticles.load('tsparticles', lines)
+  return lines
+  //  tsParticles.load('tsparticles', lines)
 }
 
 const hexagons = () => {
-  tsParticles.load('tsparticles', presetCircles)
+  // tsParticles.load('tsparticles', presetCircles)
 }
 
-export { particles, hexagons }
+export { lines, presetCircles }

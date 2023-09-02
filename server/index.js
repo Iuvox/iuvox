@@ -1,7 +1,12 @@
-const fs = require('fs')
-const path = require('path')
-const express = require('express')
-const axios = require('axios')
+import * as fs from 'fs'
+import path, { dirname } from 'path'
+import express from 'express'
+
+import { createServer as _createServer } from 'vite'
+import serveStatic from 'serve-static'
+import compression from 'compression'
+import { fileURLToPath } from 'url'
+import { FolderGit } from 'lucide-vue-next'
 
 const isTest = process.env.NODE_ENV === 'test' || !!process.env.VITE_TEST_BUILD
 
@@ -9,22 +14,23 @@ async function createServer(
     root = process.cwd(),
     isProd = process.env.NODE_ENV === 'production'
 ) {
+    const resolve = (p) => {
+        const _path = path.resolve(dirname(fileURLToPath(import.meta.url)), p)
+        return _path
+    }
+    let indexProd;
+    if(isProd) {
+        let indexProd = fs.readFileSync(resolve('../dist/client/index.html'), 'utf-8')
+    }
 
-    const resolve = (p) => path.resolve(__dirname, p)
-
-    const indexProd = isProd ?
-        fs.readFileSync(resolve('../dist/client/index.html'), 'utf-8') :
-        ''
-
-    const manifest = isProd ?
-        require('../dist/client/ssr-manifest.json') : {}
-
+    // const manifest = isProd ?
+    //     require('../dist/client/ssr-manifest.json') : {}
+    const manifest = {}
     const app = express()
 
-
-    let vite
+    let _vite = null
     if (!isProd) {
-        vite = await require('vite').createServer({
+        _vite = await _createServer({
                 root,
                 logLevel: isTest ? 'error' : 'info',
                 server: {
@@ -38,57 +44,51 @@ async function createServer(
                 }
             })
             // use vite's connect instance as middleware
-        app.use(vite.middlewares)
+        app.use(_vite.middlewares)
     } else {
-        app.use(require('compression')())
+        app.use(compression())
         app.use(
-            require('serve-static')(resolve('../dist/client'), {
+            serveStatic(resolve('../dist/client'), {
                 index: false
             })
         )
     }
 
-    
-
-    app.use('/sitemap.xml', require('./sitemap.js') )
-    app.use('/robots.txt', require('./robots.js'))
-
-
     app.use('*', async(req, res) => {
         try {
             const url = req.originalUrl
             let template, render
-            if (!isProd) {
+            if (_vite !== null && !isProd) {
                 // always read fresh template in dev
                 template = fs.readFileSync(resolve('../index.html'), 'utf-8')
-                template = await vite.transformIndexHtml(url, template)
+                template = await _vite.transformIndexHtml(url, template)
 
-                render = (await vite.ssrLoadModule(resolve('../src/entry-server.js'))).render
+                render = (await _vite.ssrLoadModule(resolve('../src/entry-server.js'))).render
             } else {
                 template = indexProd
-                render = require('../dist/server/entry-server.js').render
+                let modulename = '../dist/server/entry-server.js'
+                render = (await import(modulename)).render
             }
             const html = await render(url, manifest, template)
-
             res.status(200).set({ 'Content-Type': 'text/html' }).end(html)
         } catch (e) {
-            vite && vite.ssrFixStacktrace(e)
-            console.log(e.stack)
-            res.status(500).end(e.stack)
+        //     _vite && _vite.ssrFixStacktrace(e)
+        //     console.log(e.stack)
+        //     res.status(500).end(e.stack)
         }
     })
 
-    return { app, vite }
+    return { app, _vite }
 }
 
 if (!isTest) {
     createServer().then(({ app }) =>
-        app.listen(3000, () => {
-            console.log('http://localhost:3000')
+        app.listen(5173, () => {
+            console.log('http://localhost:5173')
         })
     )
 }
 
 
 // for test use
-exports.createServer = createServer
+export {createServer}
