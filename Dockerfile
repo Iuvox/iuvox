@@ -17,5 +17,8 @@ COPY ./package* /app/
 
 COPY ./server/* /app/server/
 
+EXPOSE 5173
+
 RUN npm ci --omit=dev
 
+CMD [ "node", "server" ]
