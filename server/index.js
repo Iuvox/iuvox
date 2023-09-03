@@ -82,11 +82,11 @@ async function createServer(
 }
 
 let server
-    createServer().then(({ app }) =>
-        server = app.listen(5173, () => {
-            console.log("http://localhost:5173");
-        })
-    );
+createServer().then(({ app }) =>
+    server = app.listen(5173, () => {
+        console.log("http://localhost:5173");
+    })
+);
 
 // Handle signals
 // The signals we want to handle

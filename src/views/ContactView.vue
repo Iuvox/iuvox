@@ -3,7 +3,7 @@
         <div class="md:w-1/2 md:py-10">
             <h1 class="font-serif text-3xl font-semibold text-white">Ontmoet ons!</h1>
             <div class="p-5 shadow-lg bg-slate-100 rounded-sm flex justify-center">
-                <BaseForm @submitted="handleSubmit($event)" class="w-3/4">
+                <BaseForm @submitted="handleSubmit($event)" class="w-3/4 relative">
                     <template v-slot:input="input">
                         <BaseInput
                             :submitted="input.submitted"
@@ -35,22 +35,21 @@
                     </template>
                     <template v-slot:submit="submit">
                         <BaseButton type="submit" class="mt-3">Verstuur</BaseButton>
-                        <!-- <transition
-                        :duration="{
-                            enter: 1000,
-                            leave: 0
-                        }"
-                        enter-to-class="fixed translate-x-[100vw] -translate-y-[40vh]"
-                        leave-active-class="hidden"
-                        leave-to-class="hidden"
-
-                    >
-                        <fa-icon
-                            icon="paper-plane"
-                            v-if="send"
-                            :style="animateSend"
-                        />
-                        </transition>-->
+                    </template>
+                    <template v-slot:popup>
+                        <transition
+                            enter-from-class="opacity-0"
+                            leave-to-class="opacity-0"
+                            enter-active-class="transition duration-300"
+                            leave-active-class="transition duration-300">
+                            <div
+                                v-if="send"
+                                class="absolute inset-0  flex justify-center items-center" >
+                                <div class="flex justify-center items-center p-12 w-full bg-dark-blue bg-opacity-80 text-white font-bold rounded-md"  >
+                                    Succesvol verstuurd
+                                </div>
+                            </div>
+                        </transition>
                     </template>
                 </BaseForm>
             </div>
@@ -95,14 +94,14 @@ export default {
     methods: {
         handleSubmit(e) {
             if (e.valid) {
-                this.send = true
                 const submitinputs = e.event.target.elements
                 api.post('/items/contact_requests', {
-                        naam: submitinputs.je_naam,
-                        email: submitinputs.e-mail,
-                        bedrijf: submitinputs.je_bedrijf,
-                        telefoonnummer: submitinputs.je_telefoonnummer
+                    naam: submitinputs.je_naam,
+                    email: submitinputs['e-mail'],
+                    bedrijf: submitinputs.je_bedrijf,
+                    telefoonnummer: submitinputs.je_telefoonnummer
                 }).then(res => {
+                    this.send = true
                     console.log(res)
                 })
             }

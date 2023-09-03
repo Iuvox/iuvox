@@ -21,4 +21,6 @@ EXPOSE 5173
 
 RUN npm ci --omit=dev
 
+ENV NODE_ENV=production
+
 CMD [ "node", "server" ]
