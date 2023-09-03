@@ -1,6 +1,6 @@
-const API_URL = (import.meta.env.SSR && import.meta.env.NODE_ENV === 'production') ? process.env.NODE_API_URL : import.meta.env.VITE_API_URL
+const API_URL = (import.meta.env.SSR ) ? process.env.NODE_API_URL : window.VITE_API_URL
 
-const API_KEY = (import.meta.env.SSR && import.meta.env.NODE_ENV === 'production') ? process.env.NODE_API_KEY : import.meta.env.VITE_API_KEY
+const API_KEY = (import.meta.env.SSR ) ? process.env.NODE_API_KEY : window.VITE_API_KEY
 
 
 const SCREEN_SIZES = {

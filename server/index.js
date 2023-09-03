@@ -6,6 +6,7 @@ import { createServer as _createServer } from "vite";
 import serveStatic from "serve-static";
 import compression from "compression";
 import { fileURLToPath } from "url";
+import { config } from "dotenv";
 
 const isTest = process.env.NODE_ENV === "test" || !!process.env.VITE_TEST_BUILD;
 
@@ -82,11 +83,12 @@ async function createServer(
 }
 
 let server
-createServer().then(({ app }) =>
+createServer().then(({ app }) => {
+    config()
     server = app.listen(5173, () => {
         console.log("http://localhost:5173");
     })
-);
+});
 
 // Handle signals
 // The signals we want to handle
